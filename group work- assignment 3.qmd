@@ -16,4 +16,41 @@ Third, we analyzed the **user count features**, including total rentals (`cnt`),
 
 The report was conducted using **R**, with `tidyverse` package for data wrangling and `ggplot2` for visualization. **Quarto** was used for reproducible report generation, and **Git** for collaborative version control across team branches.
 
-F1 shows the average total user count by season, revealing strong seasonal effects. T1 compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the *Results section*.
+@fig-season-users shows the average total user count by season, revealing strong seasonal effects. @tbl-user-type-by-season compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the *Results section*.
+
+```{r}
+#| label: fig-season-users
+#| fig-cap: "Average Total Users by Season"
+
+library(tidyverse)
+
+# Read the dataset (assuming you want to use the daily data for seasonal trends)
+day_data <- read.csv("data/day.csv")
+
+# Plot: Average total users by season
+day_data %>%
+  group_by(season) %>%
+  summarise(avg_total = mean(cnt)) %>%
+  ggplot(aes(x = factor(season), y = avg_total)) +
+  geom_col(fill = "lightblue") +
+  labs(
+   title = "Average Total Users by Season",
+    x = "Season (1=Winter, 2=Spring, 3=Summer, 4=Fall)",
+    y = "Average Users"
+  )
+
+```
+
+```{r}
+#| label: tbl-user-type-by-season
+#| tbl-cap: "Average Casual and Registered Users by Season"
+
+day_data %>%
+  group_by(season) %>%
+  summarise(
+    avg_casual = round(mean(casual), 1),
+    avg_registered = round(mean(registered), 1)
+  ) %>%
+  knitr::kable()
+
+```
