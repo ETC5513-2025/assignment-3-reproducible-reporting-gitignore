@@ -18,7 +18,7 @@ The report was conducted using **R**, with `tidyverse` package for data wranglin
 
 @fig-season-users shows the average total user count by season, revealing strong seasonal effects. @tbl-user-type-by-season compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the *Results section*.
 
-```{r}
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
 #| label: fig-season-users
 #| fig-cap: "Average Total Users by Season"
 
@@ -41,7 +41,7 @@ day_data %>%
 
 ```
 
-```{r}
+```{r,echo =FALSE}
 #| label: tbl-user-type-by-season
 #| tbl-cap: "Average Casual and Registered Users by Season"
 
