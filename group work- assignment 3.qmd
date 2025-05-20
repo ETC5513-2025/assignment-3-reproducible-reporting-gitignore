@@ -4,23 +4,16 @@ format: html
 editor: visual
 ---
 
-## Quarto
+### Methodology
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+This analysis uses the **Bike Sharing Dataset** from *UCI Machine Learning Repository*, which provides hourly rental data from 2011 to 2012 in Washington D.C. The dataset includes over 17,000 observations, with no misisng values. The variables capturing weather conditions, temporal attributes, and user counts. Our objective is to explore how environmental and time-based features influence rental demand.
 
-## Running Code
+We categorized the variables into three main areas of interest. First, the **weather features** include temperature (`temp`), perceived temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`). These values are scaled between 0 and 1 based on predefined minimum and maximum values provided by the dataset authors.
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+Secondly, **temporal variables** include hour (`hr`), day of the week (`weekday`), and binary indicators for holidays and working days (`holiday`,`workingday`). Season (`season`) and month (`mnth`) are provided as categorical values. These features allow us to explore rental demand across time, including difference between weekdays and weekends, and variations by time of day.
 
-```{r}
-1 + 1
-```
+Third, we analyzed the **user count features**, including total rentals (`cnt`), as well as `casual` and `registered` users. This breakdown helps identify usage patterns by user type, including subscription behavior and potential tourist or leisure activity.
 
-You can add options to executable code like this
+The report was conducted using **R**, with `tidyverse` package for data wrangling and `ggplot2` for visualization. **Quarto** was used for reproducible report generation, and **Git** for collaborative version control across team branches.
 
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
+F1 shows the average total user count by season, revealing strong seasonal effects. T1 compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the *Results section*.
