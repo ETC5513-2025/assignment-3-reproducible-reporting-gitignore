@@ -4,53 +4,103 @@ format: html
 editor: visual
 ---
 
-### Methodology
+### Methodology:
 
-This analysis uses the **Bike Sharing Dataset** from *UCI Machine Learning Repository*, which provides hourly rental data from 2011 to 2012 in Washington D.C. The dataset includes over 17,000 observations, with no misisng values. The variables capturing weather conditions, temporal attributes, and user counts. Our objective is to explore how environmental and time-based features influence rental demand.
+This analysis uses the **Bike Sharing Dataset** from the UCI Machine Learning Repository, containing two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
 
-We categorized the variables into three main areas of interest. First, the **weather features** include temperature (`temp`), perceived temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`). These values are scaled between 0 and 1 based on predefined minimum and maximum values provided by the dataset authors.
+The datasets are complete, with no missing values. They contain weather metrics, timestamps, and detailed user counts. We categorized the variables into three analytical areas:
 
-Secondly, **temporal variables** include hour (`hr`), day of the week (`weekday`), and binary indicators for holidays and working days (`holiday`,`workingday`). Season (`season`) and month (`mnth`) are provided as categorical values. These features allow us to explore rental demand across time, including difference between weekdays and weekends, and variations by time of day.
+1\. **Environmental conditions**: Continuous variables include temperature (`temp`), perceived temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`) — all normalized. These were sourced from \`hour.csv\` and used to assess how weather influences demand.
 
-Third, we analyzed the **user count features**, including total rentals (`cnt`), as well as `casual` and `registered` users. This breakdown helps identify usage patterns by user type, including subscription behavior and potential tourist or leisure activity.
+2\. **Temporal factors**: These include hour of day (`hr`), day of week (`weekday`), holidays, and working days (`workingday`). `hour.csv`was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using `season` (1 = Winter to 4 = Fall) and `mnth` from `day.csv`.
 
-The report was conducted using **R**, with `tidyverse` package for data wrangling and `ggplot2` for visualization. **Quarto** was used for reproducible report generation, and **Git** for collaborative version control across team branches.
+3\. **User behavior**: Total rentals (`cnt`) are split into `casual`(non-registered) and `registered` (subscribers). `day.csv` was used to study seasonal variation in user types, while `hour.csv` was used for finer temporal granularity.
 
-@fig-season-users shows the average total user count by season, revealing strong seasonal effects. @tbl-user-type-by-season compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the *Results section*.
+All analysis was performed in **R**, using `tidyverse` for data wrangling and `ggplot2` for visualization. The report was built in **Quarto** for reproducibility, and **Git** was used for structured collaboration via separate branches.
+
+@fig-season-users shows average total users by season using `day.csv`, capturing clear seasonal demand shifts. @tbl-hourly-weektype uses `hour.csv` to show average hourly rentals on weekdays vs. weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 #| label: fig-season-users
-#| fig-cap: "Average Total Users by Season"
-
+#| fig-cap: "Average Total Users by Season (from day.csv)"
 library(tidyverse)
 
-# Read the dataset (assuming you want to use the daily data for seasonal trends)
 day_data <- read.csv("data/day.csv")
 
-# Plot: Average total users by season
 day_data %>%
   group_by(season) %>%
   summarise(avg_total = mean(cnt)) %>%
   ggplot(aes(x = factor(season), y = avg_total)) +
   geom_col(fill = "lightblue") +
   labs(
-   title = "Average Total Users by Season",
-    x = "Season (1=Winter, 2=Spring, 3=Summer, 4=Fall)",
+    title = "Average Total Users by Season",
+    x = "Season (1=Winter, ..., 4=Fall)",
     y = "Average Users"
   )
 
 ```
 
 ```{r,echo =FALSE}
-#| label: tbl-user-type-by-season
-#| tbl-cap: "Average Casual and Registered Users by Season"
+
+#| label: tbl-hourly-weektype
+#| tbl-cap: "Average Hourly Rentals on Weekdays vs Weekends (from hour.csv)"
+
+
+hour_data <- read.csv("data/hour.csv")
+
+hour_data %>%
+  mutate(weektype = ifelse(weekday %in% c(0, 6), "Weekend", "Weekday")) %>%
+  group_by(hr, weektype) %>%
+  summarise(avg_count = round(mean(cnt), 1), .groups = "drop") %>%
+  pivot_wider(names_from = weektype, values_from = avg_count) %>%
+  knitr::kable()
+
+
+```
+
+### Results:
+
+#### 1. Seasonal Trends and User Behavior
+
+To examine how bike usage shifts across seasons, we analyzed total rentals (`cnt`) and user type composition. @fig-user-by-season hows that demand peaks in summer and fall, while winter records the lowest activity. @tbl-user-share-by-season breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.
+
+```{r,echo=FALSE}
+#| label: fig-user-by-season
+#| fig-cap: "Average Casual and Registered Users by Season"
+
+day_data %>%
+  pivot_longer(cols = c(casual, registered), names_to = "user_type", values_to = "count") %>%
+  group_by(season, user_type) %>%
+  summarise(avg_count = mean(count), .groups = "drop") %>%
+  ggplot(aes(x = factor(season), y = avg_count, fill = user_type)) +
+  geom_col(position = "dodge") +
+  labs(
+    x = "Season (1=Winter, ..., 4=Fall)",
+    y = "Average Rentals",
+    fill = "User Type"
+  )
+
+
+
+```
+
+```{r, echo=FALSE}
+#| label: tbl-user-share-by-season
+#| tbl-cap: "Percentage of Casual and Registered Users by Season"
+
 
 day_data %>%
   group_by(season) %>%
   summarise(
-    avg_casual = round(mean(casual), 1),
-    avg_registered = round(mean(registered), 1)
+    casual_total = sum(casual),
+    registered_total = sum(registered),
+    total = sum(cnt)
   ) %>%
+  mutate(
+    pct_casual = round(100 * casual_total / total, 1),
+    pct_registered = round(100 * registered_total / total, 1)
+  ) %>%
+  select(season, pct_casual, pct_registered) %>%
   knitr::kable()
 
 ```

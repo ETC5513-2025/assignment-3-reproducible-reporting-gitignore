@@ -63,13 +63,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="methodology" class="level3">
-<h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
-<p>This analysis uses the <strong>Bike Sharing Dataset</strong> from <em>UCI Machine Learning Repository</em>, which provides hourly rental data from 2011 to 2012 in Washington D.C. The dataset includes over 17,000 observations, with no misisng values. The variables capturing weather conditions, temporal attributes, and user counts. Our objective is to explore how environmental and time-based features influence rental demand.</p>
-<p>We categorized the variables into three main areas of interest. First, the <strong>weather features</strong> include temperature (<code>temp</code>), perceived temperature (<code>atemp</code>), humidity (<code>hum</code>), and windspeed (<code>windspeed</code>). These values are scaled between 0 and 1 based on predefined minimum and maximum values provided by the dataset authors.</p>
-<p>Secondly, <strong>temporal variables</strong> include hour (<code>hr</code>), day of the week (<code>weekday</code>), and binary indicators for holidays and working days (<code>holiday</code>,<code>workingday</code>). Season (<code>season</code>) and month (<code>mnth</code>) are provided as categorical values. These features allow us to explore rental demand across time, including difference between weekdays and weekends, and variations by time of day.</p>
-<p>Third, we analyzed the <strong>user count features</strong>, including total rentals (<code>cnt</code>), as well as <code>casual</code> and <code>registered</code> users. This breakdown helps identify usage patterns by user type, including subscription behavior and potential tourist or leisure activity.</p>
-<p>The report was conducted using <strong>R</strong>, with <code>tidyverse</code> package for data wrangling and <code>ggplot2</code> for visualization. <strong>Quarto</strong> was used for reproducible report generation, and <strong>Git</strong> for collaborative version control across team branches.</p>
-<p><a href="#fig-season-users" class="quarto-xref">Figure&nbsp;1</a> shows the average total user count by season, revealing strong seasonal effects. <a href="#tbl-user-type-by-season" class="quarto-xref">Table&nbsp;1</a> compares average casual and registered users, showing that registered users dominate usage but casual users increase during warmer months. Additional findings are presented in the <em>Results section</em>.</p>
+<h3 class="anchored" data-anchor-id="methodology">Methodology:</h3>
+<p>This analysis uses the <strong>Bike Sharing Dataset</strong> from the UCI Machine Learning Repository, containing two files: <code>day.csv</code>(daily rental data) and <code>hour.csv</code> (hourly rental data) from 2011 to 2012 in Washington D.C.</p>
+<p>The datasets are complete, with no missing values. They contain weather metrics, timestamps, and detailed user counts. We categorized the variables into three analytical areas:</p>
+<p>1. <strong>Environmental conditions</strong>: Continuous variables include temperature (<code>temp</code>), perceived temperature (<code>atemp</code>), humidity (<code>hum</code>), and windspeed (<code>windspeed</code>) — all normalized. These were sourced from `hour.csv` and used to assess how weather influences demand.</p>
+<p>2. <strong>Temporal factors</strong>: These include hour of day (<code>hr</code>), day of week (<code>weekday</code>), holidays, and working days (<code>workingday</code>). <code>hour.csv</code>was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using <code>season</code> (1 = Winter to 4 = Fall) and <code>mnth</code> from <code>day.csv</code>.</p>
+<p>3. <strong>User behavior</strong>: Total rentals (<code>cnt</code>) are split into <code>casual</code>(non-registered) and <code>registered</code> (subscribers). <code>day.csv</code> was used to study seasonal variation in user types, while <code>hour.csv</code> was used for finer temporal granularity.</p>
+<p>All analysis was performed in <strong>R</strong>, using <code>tidyverse</code> for data wrangling and <code>ggplot2</code> for visualization. The report was built in <strong>Quarto</strong> for reproducibility, and <strong>Git</strong> was used for structured collaboration via separate branches.</p>
+<p><a href="#fig-season-users" class="quarto-xref">Figure&nbsp;1</a> shows average total users by season using <code>day.csv</code>, capturing clear seasonal demand shifts. <strong>?@tbl-hourly-weektype</strong> uses <code>hour.csv</code> to show average hourly rentals on weekdays vs.&nbsp;weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-season-users" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -78,48 +79,203 @@ ul.task-list li input[type="checkbox"] {
 <img src="group-work--assignment-3_files/figure-html/fig-season-users-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-season-users-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Average Total Users by Season
+Figure&nbsp;1: Average Total Users by Season (from day.csv)
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div id="tbl-user-type-by-season" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-user-type-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Average Casual and Registered Users by Season
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">hr</th>
+<th style="text-align: right;">Weekday</th>
+<th style="text-align: right;">Weekend</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">37.6</td>
+<td style="text-align: right;">94.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">72.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">56.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">27.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">24.3</td>
+<td style="text-align: right;">8.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">99.5</td>
+<td style="text-align: right;">17.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">282.1</td>
+<td style="text-align: right;">39.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">464.6</td>
+<td style="text-align: right;">99.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">238.7</td>
+<td style="text-align: right;">171.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">138.1</td>
+<td style="text-align: right;">261.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">161.9</td>
+<td style="text-align: right;">322.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">204.3</td>
+<td style="text-align: right;">374.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">202.5</td>
+<td style="text-align: right;">380.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">187.7</td>
+<td style="text-align: right;">372.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">203.9</td>
+<td style="text-align: right;">368.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">292.3</td>
+<td style="text-align: right;">360.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">515.9</td>
+<td style="text-align: right;">326.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">483.2</td>
+<td style="text-align: right;">282.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">343.3</td>
+<td style="text-align: right;">232.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">246.8</td>
+<td style="text-align: right;">174.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">184.6</td>
+<td style="text-align: right;">141.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">137.2</td>
+<td style="text-align: right;">116.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">87.5</td>
+<td style="text-align: right;">88.7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results:</h3>
+<section id="seasonal-trends-and-user-behavior" class="level4">
+<h4 class="anchored" data-anchor-id="seasonal-trends-and-user-behavior">1. Seasonal Trends and User Behavior</h4>
+<p>To examine how bike usage shifts across seasons, we analyzed total rentals (<code>cnt</code>) and user type composition. <a href="#fig-user-by-season" class="quarto-xref">Figure&nbsp;2</a> hows that demand peaks in summer and fall, while winter records the lowest activity. <a href="#tbl-user-share-by-season" class="quarto-xref">Table&nbsp;1</a> breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-user-by-season" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-user-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="group-work--assignment-3_files/figure-html/fig-user-by-season-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-user-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Average Casual and Registered Users by Season
 </figcaption>
-<div aria-describedby="tbl-user-type-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-user-share-by-season" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-user-share-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Percentage of Casual and Registered Users by Season
+</figcaption>
+<div aria-describedby="tbl-user-share-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;">season</th>
-<th style="text-align: right;">avg_casual</th>
-<th style="text-align: right;">avg_registered</th>
+<th style="text-align: right;">pct_casual</th>
+<th style="text-align: right;">pct_registered</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">334.9</td>
-<td style="text-align: right;">2269.2</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">87.1</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">1106.1</td>
-<td style="text-align: right;">3886.2</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">77.8</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">1202.6</td>
-<td style="text-align: right;">4441.7</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">78.7</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">729.1</td>
-<td style="text-align: right;">3999.1</td>
+<td style="text-align: right;">15.4</td>
+<td style="text-align: right;">84.6</td>
 </tr>
 </tbody>
 </table>
@@ -128,6 +284,7 @@ Table&nbsp;1: Average Casual and Registered Users by Season
 </figure>
 </div>
 </div>
+</section>
 </section>
 
 </main>
