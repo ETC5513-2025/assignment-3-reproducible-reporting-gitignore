@@ -31,7 +31,7 @@ University environments play a significant role in shaping and reflecting these 
 Beyond campuses, the broader urban adoption of bike sharing connects with evolving transportation patterns influenced by delivery platforms, active lifestyle trends, and environmental awareness. Understanding the interplay between individual cycling habits and shared bike systems is crucial for developing integrated, sustainable urban transport policies in Australian cities.
 :::
 
-### Methodology:
+## Methodology:
 
 This analysis uses the **Bike Sharing Dataset** from the UCI Machine Learning Repository, containing two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
 
@@ -85,9 +85,9 @@ hour_data %>%
 
 ```
 
-### Results:
+## Results:
 
-#### 1. Seasonal Trends and User Behavior
+### 1. Seasonal Trends and User Behavior
 
 To examine how bike usage shifts across seasons, we analyzed total rentals (`cnt`) and user type composition. @fig-user-by-season hows that demand peaks in summer and fall, while winter records the lowest activity. @tbl-user-share-by-season breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.
 
@@ -132,7 +132,7 @@ day_data %>%
 
 ```
 
-### Discussion, Conclusion and Recommendations:
+## Discussion, Conclusion and Recommendations:
 
 This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform decision-making.
 
@@ -149,24 +149,4 @@ We recommend:
 -   Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns
 
 This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
-
-## Introduction
-
-::: {style="text-align: justify;"}
-Urban transportation systems worldwide are evolving rapidly, driven by the need for sustainable, efficient, and healthy mobility options. Bike-sharing programs have emerged as a prominent solution, offering flexible and automated access to bicycles, including electric bikes that facilitate short-distance urban travel. These programs help alleviate congestion, reduce environmental impact, and promote active lifestyles.
-
-This report analyzes two years of data from the Capital Bikeshare system in Washington D.C. (2011–2012), aggregating bike rental counts by day and hour while incorporating environmental and temporal factors such as temperature, humidity, weather conditions, seasons, holidays, and weekdays. These data reveal patterns in bike usage linked to external influences.
-
-Although based on data from Washington D.C., the findings provide important insights relevant to Australian urban contexts, where cycling is deeply integrated into daily life, particularly among young adults and university students. In Australia, cycling is both a practical transport choice and a lifestyle preference, with many urban residents using bikes to navigate congested areas, access public transport, and engage in recreational activities.
-
-University environments play a significant role in shaping and reflecting these cycling habits. Campuses, often characterized by limited car parking and extensive grounds, encourage students to cycle, which naturally supports and sustains demand for bike-sharing services such as Lime e-bikes and Neuron Mobility. This relationship is mutually reinforcing: a strong cycling culture among students bolsters the success of bike sharing programs, while accessible bike sharing infrastructure enhances students’ mobility and reinforces their cycling habits.
-
-Beyond campuses, the broader urban adoption of bike sharing connects with evolving transportation patterns influenced by delivery platforms, active lifestyle trends, and environmental awareness. Understanding the interplay between individual cycling habits and shared bike systems is crucial for developing integrated, sustainable urban transport policies in Australian cities.
-:::
-
-## Executive Summary
-
-::: {style="text-align: justify;"}
-This report analyzes two years of data from Washington D.C.'s Capital Bikeshare system, revealing how environmental and temporal factors influence bike usage patterns. The findings highlight the strong link between favorable weather, holidays, and bike rental trends, with implications for urban transport systems. Applying these insights to Australia, the report underscores the significant role of cycling culture, particularly among university students, in sustaining bike-sharing programs like Lime e-bikes. The study emphasizes the potential of bike-sharing systems to promote sustainable, healthy, and efficient mobility.
-:::
 
