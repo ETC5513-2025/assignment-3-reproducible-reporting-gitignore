@@ -122,7 +122,6 @@ The graph titled **"Weather Features vs. Total Bike Rentals"** provides a visual
 -   **Least Impactful:** `hum` and `windspeed` have weaker effects, though still relevant.
 
 -   **Helpful for:**
-
     -   **Predictive Modeling:** Identifying which weather variables to prioritize in forecasting models.
     -   **Business Decisions:** Informing staffing or inventory needs for bike rental services based on weather forecasts.
     -   **Policy Making:** Urban planners can use this to plan infrastructure improvements aligned with weather-related usage trends.
