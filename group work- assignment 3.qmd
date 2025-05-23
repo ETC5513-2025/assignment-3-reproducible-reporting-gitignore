@@ -23,7 +23,6 @@ day_data <- read_csv("data/bike+sharing+dataset/day.csv") %>%
 ```
 ## Introduction
 
-<<<<<<< HEAD
 This report explores features affecting bike rentals:
 
 -   **Weather conditions**: `temp`, `atemp`, `hum`, `windspeed`
@@ -192,13 +191,11 @@ The bar chart titled **"Average Hourly Bike Rentals"** presents the mean number 
 
 -   City planners or bike-sharing companies can plan **dedicated bike lanes or docking stations** where demand spikes.
 
-------------------------------------------------------------------------
 
 ### Summary:
 
 This hourly analysis highlights a **classic bimodal usage pattern** centered around commuting hours. Understanding this pattern helps improve user experience, resource allocation, and urban transport integration.
 
-------------------------------------------------------------------------
 
 ## Weekday vs Weekend
 
@@ -215,7 +212,7 @@ This graph compares rental trends on weekdays vs. weekends across the full time 
 
 The graph titled **"Weekday vs Weekend Rentals"** provides a time-series comparison of bike rental trends across weekdays and weekends. Let’s explore the key insights and their significance:
 
-------------------------------------------------------------------------
+
 
 ### **Insights from the Graph:**
 
