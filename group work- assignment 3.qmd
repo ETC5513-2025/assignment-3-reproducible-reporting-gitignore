@@ -3,24 +3,224 @@ title: "assignment 3- group work"
 format: html
 editor: visual
 ---
+```{r setup, include=FALSE}
+# Load libraries and read datasets
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
 
-## Quarto
+day_data <- read_csv("data/bike+sharing+dataset/day.csv") %>%
+  mutate(date = ymd(dteday),
+         day_type = if_else(weekday %in% c(0, 6), "Weekend", "Weekday"))
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+hour_data <- read_csv("data/bike+sharing+dataset/hour.csv") %>%
+  mutate(hr = as.factor(hr))
 ```
 
-You can add options to executable code like this
+## Introduction
+
+This report explores features affecting bike rentals:
+
+-   **Weather conditions**: `temp`, `atemp`, `hum`, `windspeed`
+
+-   **Time-based variables**: `hour`, `weekday`, `workingday`, `holiday`
+
+------------------------------------------------------------------------
+
+## Data Structure
 
 ```{r}
-#| echo: false
-2 * 2
+head(day_data)
+head(hour_data)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+## Hourly Rental Patterns
+
+```{r}
+hour_data %>%
+  group_by(hr) %>%
+  summarise(avg_rentals = mean(cnt)) %>%
+  ggplot(aes(x = hr, y = avg_rentals)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Average Hourly Bike Rentals", x = "Hour", y = "Average Rentals") +
+  theme_minimal()
+```
+
+The bar chart titled **"Average Hourly Bike Rentals"** presents the mean number of bike rentals across each hour of the day, offering valuable insight into daily usage patterns.
+
+------------------------------------------------------------------------
+
+### **Key Insights from the Chart:**
+
+#### 1. **Two Prominent Peaks:**
+
+-   **Morning Peak (\~8 AM):**
+
+    -   Clear spike in average rentals around 8 AM.
+    -   Likely corresponds to **commuting hours** for work or school.
+
+-   **Evening Peak (\~5–6 PM):**
+
+    -   Highest peak occurs around 5–6 PM.
+    -   Reflects **commute back home** or post-work travel.
+
+#### 2. **Midday Stability:**
+
+-   Between **11 AM and 3 PM**, rentals are steady but lower than peak times.
+-   May include **lunch breaks**, casual or leisure usage.
+
+#### 3. **Low Usage at Night:**
+
+-   From **midnight to 5 AM**, rentals are minimal.
+-   Expected due to **lower demand and limited activity** during nighttime.
+
+#### 4. **Gradual Build-up:**
+
+-   Rentals start increasing sharply from around **6 AM**, indicating the **start of the day’s activity**.
+
+------------------------------------------------------------------------
+
+### **Use:**
+
+#### **Operational Efficiency:**
+
+-   **Rebalancing Bikes**: Optimize bike placement and availability ahead of peak hours.
+-   **Maintenance Scheduling**: Perform maintenance during low-usage hours (e.g., 2–4 AM).
+
+#### **User Behavior Understanding:**
+
+-   Confirms that the system is heavily used by **commuters**, emphasizing the importance of **rush hour planning**.
+
+#### **Infrastructure Planning:**
+
+-   City planners or bike-sharing companies can plan **dedicated bike lanes or docking stations** where demand spikes.
+
+------------------------------------------------------------------------
+
+### Summary:
+
+This hourly analysis highlights a **classic bimodal usage pattern** centered around commuting hours. Understanding this pattern helps improve user experience, resource allocation, and urban transport integration.
+
+------------------------------------------------------------------------
+
+## Weekday vs Weekend
+
+This graph compares rental trends on weekdays vs. weekends across the full time period.
+
+```{r}
+# Weekday vs Weekend
+ ggplot(day_data, aes(x = date, y = cnt, color = day_type)) +
+  geom_line(alpha = 0.7) +
+  geom_smooth(se = FALSE, method = "loess", span = 0.2) +
+  scale_color_manual(values = c("Weekday" = "#1b9e77", "Weekend" = "#d95f02")) +
+  labs(title = "Weekday vs Weekend Rentals", x = "Date", y = "Rentals", color = "Day Type")
+```
+
+The graph titled **"Weekday vs Weekend Rentals"** provides a time-series comparison of bike rental trends across weekdays and weekends. Let’s explore the key insights and their significance:
+
+------------------------------------------------------------------------
+
+### **Insights from the Graph:**
+
+#### 1. **Overall Trend:**
+
+-   Both weekday and weekend rentals follow a **seasonal pattern**, with higher usage during warmer months (peaking mid-year) and lower usage during colder months (start and end of the year).
+-   The trends repeat over two years, suggesting strong seasonality in bike rentals.
+
+#### 2. **Weekday Rentals (Green Line):**
+
+-   Generally **higher and more consistent** than weekend rentals.
+-   The green smoothed line shows stable high points during peak months (summer), likely due to daily commuting.
+
+#### 3. **Weekend Rentals (Orange Line):**
+
+-   More **variable and spiky**, possibly influenced by weather, events, or leisure activities.
+-   Although lower than weekday rentals on average, weekends still show strong peaks during favorable months.
+
+### Summary:
+
+This graph clearly shows that **bike rental patterns differ significantly between weekdays and weekends**, with **seasonality and consistency** being key differences. It helps identify **when and how users engage** with the service, which is crucial for data-driven decision making in urban mobility planning or bike-sharing operations.
+
+```{r}
+
+# Plot: Date vs Rental Count
+ggplot(day_data, aes(x = dteday, y = cnt)) +
+  geom_line(color = "#1f77b4", size = 1) +
+  labs(
+    title = "Daily Bike Rentals Over Time",
+    x = "Date",
+    y = "Total Rentals"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+```
+
+1.  **Clear Upward Trend in First Year**:
+
+Rentals steadily increase from early 2011 through mid-2011. Indicates growing adoption of the bike-sharing service, possibly due to awareness or seasonal effects.
+
+2.  **Strong Seasonal Patterns**:
+
+Peaks are consistently seen during summer months (June–August). Dips in usage appear in winter months, likely due to colder weather and reduced ridership.
+
+3.  **Sharp Spikes and Drops**:
+
+Several days show sudden drops (close to 0) and spikes: Likely due to missing data, system outages, or extreme weather. Worth investigating further using weather data or logs.
+
+4.  **Higher Plateau in Second Year**:
+
+In 2012, daily rentals are consistently higher compared to 2011. This suggests sustained user base growth and possibly expansion of infrastructure.
+
+```{r}
+# Summer 2011 Focus
+ day_data %>%
+  filter(date >= "2011-06-01", date <= "2011-08-31") %>%
+  ggplot(aes(x = date, y = cnt)) +
+  geom_line(color = "#31a354") +
+  geom_smooth(se = FALSE, method = "loess", span = 0.4, color = "#e34a33") +
+  labs(title = "Bike Rentals in Summer 2011", x = "Date", y = "Rentals")
+```
+
+What the Chart Shows: Green Line: Raw daily bike rental counts. Red LOESS Curve: Smoothed trend to highlight overall direction (captures nonlinear patterns).
+
+### Key Observations:
+
+**Relatively Stable Start (June)**:
+
+Rentals fluctuate around 4800–5200. Early signs of stability as the program matured post-launch.
+
+**Rising Trend Toward July**: Clear upward drift through mid-to-late June into July. Possibly reflects better weather, longer daylight hours, or increased adoption.
+
+**Mid-July Peak**: Several days around 6000 rentals—among the highest in the summer. Could correspond to events or peak seasonal demand.
+
+**August Dip**: Rentals decline in early-to-mid August. A few drops below 4000 rentals—possibly due to weather events, vacations, or operational issues.
+
+**End-of-August Anomaly**: A sudden sharp drop near end of August (close to 0 rentals). This is likely a data gap, outage, or recording error.
+
+### Use:
+
+**Operational Planning**: Staffing and maintenance could be scaled with demand (peaking July).
+
+**Event/Promotion Timing**: Best results likely mid-summer.
+
+**Anomaly Handling**: Investigate sharp drops for data integrity.
+
+------------------------------------------------------------------------
+
+## Summary of Insights
+
+| Feature            | Effect on Rentals                        |
+|--------------------|------------------------------------------|
+| Temperature        | Strong positive impact                   |
+| Feels-like Temp    | Similar to temperature                   |
+| Humidity           | Mild negative impact                     |
+| Windspeed          | Weak correlation                         |
+| Hour of Day        | Peaks during morning and evening commute |
+| Weekday vs Weekend | Higher and consistent on weekdays        |
+| Time Progression   | General upward trend year over year      |
+
+------------------------------------------------------------------------
