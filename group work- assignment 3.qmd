@@ -18,11 +18,13 @@ The datasets are complete, with no missing values. They contain weather metrics,
 
 All analysis was performed in **R**, using `tidyverse` for data wrangling and `ggplot2` for visualization. The report was built in **Quarto** for reproducibility, and **Git** was used for structured collaboration via separate branches.
 
-@fig-season-users shows average total users by season using `day.csv`, capturing clear seasonal demand shifts. @tbl-hourly-weektype uses `hour.csv` to show average hourly rentals on weekdays vs. weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.
+@fig-season-users shows average total users by season using `day.csv`, capturing clear seasonal demand shifts.
+
+@tbl-hourly-weektype uses `hour.csv` to show average hourly rentals on weekdays vs. weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 #| label: fig-season-users
-#| fig-cap: "Average Total Users by Season (from day.csv)"
+#| fig-cap: "Average Total Users by Season"
 library(tidyverse)
 
 day_data <- read.csv("data/day.csv")
@@ -41,10 +43,8 @@ day_data %>%
 ```
 
 ```{r,echo =FALSE}
-
 #| label: tbl-hourly-weektype
-#| tbl-cap: "Average Hourly Rentals on Weekdays vs Weekends (from hour.csv)"
-
+#| tbl-cap: "Average Hourly Rentals on Weekdays vs Weekends"
 
 hour_data <- read.csv("data/hour.csv")
 
@@ -104,3 +104,21 @@ day_data %>%
   knitr::kable()
 
 ```
+
+### Discussion, Conclusion and Recommendations:
+
+This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform decision-making.
+
+Our results showed strong seasonal and hourly trends. Rental demand peaked in summer and fall, with significantly higher casual user activity in warmer months, suggesting weather-sensitive, possibly tourist-driven behavior. Registered users, in contrast, showed consistent usage throughout the year and across weekdays, indicating habitual commuting. Additionally, rental volumes varied by hour, with predictable peaks during morning and evening commute times on weekdays, and a more gradual midday rise on weekends.
+
+These findings suggest that registered users represent a loyal, time-consistent base, while casual users drive demand spikes that are highly sensitive to weather and season. This distinction is critical for bike-sharing operators and city planners when allocating resources or tailoring marketing strategies.
+
+We recommend:
+
+-   Increasing bike availability and docking stations near recreational zones in summer
+
+-   Prioritizing maintenance and reliability of service for commuters year-round
+
+-   Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns
+
+This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.

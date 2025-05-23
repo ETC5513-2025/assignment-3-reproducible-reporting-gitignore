@@ -70,7 +70,8 @@ ul.task-list li input[type="checkbox"] {
 <p>2. <strong>Temporal factors</strong>: These include hour of day (<code>hr</code>), day of week (<code>weekday</code>), holidays, and working days (<code>workingday</code>). <code>hour.csv</code>was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using <code>season</code> (1 = Winter to 4 = Fall) and <code>mnth</code> from <code>day.csv</code>.</p>
 <p>3. <strong>User behavior</strong>: Total rentals (<code>cnt</code>) are split into <code>casual</code>(non-registered) and <code>registered</code> (subscribers). <code>day.csv</code> was used to study seasonal variation in user types, while <code>hour.csv</code> was used for finer temporal granularity.</p>
 <p>All analysis was performed in <strong>R</strong>, using <code>tidyverse</code> for data wrangling and <code>ggplot2</code> for visualization. The report was built in <strong>Quarto</strong> for reproducibility, and <strong>Git</strong> was used for structured collaboration via separate branches.</p>
-<p><a href="#fig-season-users" class="quarto-xref">Figure&nbsp;1</a> shows average total users by season using <code>day.csv</code>, capturing clear seasonal demand shifts. <strong>?@tbl-hourly-weektype</strong> uses <code>hour.csv</code> to show average hourly rentals on weekdays vs.&nbsp;weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.</p>
+<p><a href="#fig-season-users" class="quarto-xref">Figure&nbsp;1</a> shows average total users by season using <code>day.csv</code>, capturing clear seasonal demand shifts.</p>
+<p><a href="#tbl-hourly-weektype" class="quarto-xref">Table&nbsp;1</a> uses <code>hour.csv</code> to show average hourly rentals on weekdays vs.&nbsp;weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-season-users" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -79,15 +80,21 @@ ul.task-list li input[type="checkbox"] {
 <img src="group-work--assignment-3_files/figure-html/fig-season-users-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-season-users-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Average Total Users by Season (from day.csv)
+Figure&nbsp;1: Average Total Users by Season
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
+<div id="tbl-hourly-weektype" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hourly-weektype-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Average Hourly Rentals on Weekdays vs Weekends
+</figcaption>
+<div aria-describedby="tbl-hourly-weektype-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: right;">hr</th>
@@ -220,12 +227,15 @@ Figure&nbsp;1: Average Total Users by Season (from day.csv)
 </table>
 </div>
 </div>
+</figure>
+</div>
+</div>
 </section>
 <section id="results" class="level3">
 <h3 class="anchored" data-anchor-id="results">Results:</h3>
 <section id="seasonal-trends-and-user-behavior" class="level4">
 <h4 class="anchored" data-anchor-id="seasonal-trends-and-user-behavior">1. Seasonal Trends and User Behavior</h4>
-<p>To examine how bike usage shifts across seasons, we analyzed total rentals (<code>cnt</code>) and user type composition. <a href="#fig-user-by-season" class="quarto-xref">Figure&nbsp;2</a> hows that demand peaks in summer and fall, while winter records the lowest activity. <a href="#tbl-user-share-by-season" class="quarto-xref">Table&nbsp;1</a> breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.</p>
+<p>To examine how bike usage shifts across seasons, we analyzed total rentals (<code>cnt</code>) and user type composition. <a href="#fig-user-by-season" class="quarto-xref">Figure&nbsp;2</a> hows that demand peaks in summer and fall, while winter records the lowest activity. <a href="#tbl-user-share-by-season" class="quarto-xref">Table&nbsp;2</a> breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-user-by-season" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -244,7 +254,7 @@ Figure&nbsp;2: Average Casual and Registered Users by Season
 <div id="tbl-user-share-by-season" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-user-share-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Percentage of Casual and Registered Users by Season
+Table&nbsp;2: Percentage of Casual and Registered Users by Season
 </figcaption>
 <div aria-describedby="tbl-user-share-by-season-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -284,6 +294,16 @@ Table&nbsp;1: Percentage of Casual and Registered Users by Season
 </figure>
 </div>
 </div>
+<p>This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather, temperature, hour of day, and user type (casual vs.&nbsp;registered), with the goal of uncovering meaningful trends to inform decision-making.</p>
+<p>Our results showed strong seasonal and hourly trends. Rental demand peaked in summer and fall, with significantly higher casual user activity in warmer months, suggesting weather-sensitive, possibly tourist-driven behavior. Registered users, in contrast, showed consistent usage throughout the year and across weekdays, indicating habitual commuting. Additionally, rental volumes varied by hour, with predictable peaks during morning and evening commute times on weekdays, and a more gradual midday rise on weekends.</p>
+<p>These findings suggest that registered users represent a loyal, time-consistent base, while casual users drive demand spikes that are highly sensitive to weather and season. This distinction is critical for bike-sharing operators and city planners when allocating resources or tailoring marketing strategies.</p>
+<p>We recommend:</p>
+<ul>
+<li><p>Increasing bike availability and docking stations near recreational zones in summer</p></li>
+<li><p>Prioritizing maintenance and reliability of service for commuters year-round</p></li>
+<li><p>Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns</p></li>
+</ul>
+<p>This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.</p>
 </section>
 </section>
 
