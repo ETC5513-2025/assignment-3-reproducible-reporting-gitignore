@@ -4,23 +4,127 @@ format: html
 editor: visual
 ---
 
-## Quarto
+```{r setup, include=FALSE}
+# Load libraries and read datasets
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+day_data <- read_csv("data/bike+sharing+dataset/day.csv") %>%
+  mutate(date = ymd(dteday),
+         day_type = if_else(weekday %in% c(0, 6), "Weekend", "Weekday"))
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+hour_data <- read_csv("data/bike+sharing+dataset/hour.csv") %>%
+  mutate(hr = as.factor(hr))
 ```
 
-You can add options to executable code like this
+## Introduction
+
+This report explores features affecting bike rentals:
+
+-   **Weather conditions**: `temp`, `atemp`, `hum`, `windspeed`
+
+-   **Time-based variables**: `hour`, `weekday`, `workingday`, `holiday`
+
+------------------------------------------------------------------------
+
+## Data Structure
 
 ```{r}
-#| echo: false
-2 * 2
+head(day_data)
+head(hour_data)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+------------------------------------------------------------------------
+
+## Weather Features Correlation
+
+This correlation matrix shows the pairwise relationships between the weather variables (temp, atemp, hum, windspeed) and the total number of rentals (cnt).
+
+```{r}
+day_data %>%
+  select(temp, atemp, hum, windspeed, cnt) %>%
+  cor() %>%
+  round(2)
+```
+
+**Strong Positive Correlations**
+
+**temp and cnt**: 0.63 Higher temperatures are associated with more rentals. Warm weather encourages biking.
+
+**atemp and cnt**: 0.63 “Feels-like” temperature also shows the same strong positive influence. Since it's what riders actually experience, it's intuitive that this aligns with temp. Weak/Negative Correlations
+
+**hum and cnt**: -0.10 A slightly negative correlation means higher humidity slightly reduces bike rentals, but it's not a major factor.
+
+**windspeed and cnt**: -0.23 Moderate negative relationship: Windier days discourage biking, but the effect is relatively weak.
+
+**Feature Redundancy**
+
+**temp and atemp**: 0.99 Almost perfect correlation means they contain nearly the same information. You might consider using just one in modeling to avoid redundancy.
+
+------------------------------------------------------------------------
+
+## Weather vs Rentals
+
+```{r}
+day_data %>%
+  pivot_longer(cols = c(temp, atemp, hum, windspeed),
+               names_to = "feature", values_to = "value") %>%
+  ggplot(aes(x = value, y = cnt)) +
+  geom_point(alpha = 0.5, color = "#3182bd") +
+  geom_smooth(method = "lm", color = "darkred") +
+  facet_wrap(~feature, scales = "free_x") +
+  labs(title = "Weather Features vs. Total Bike Rentals",
+       x = "Feature Value", y = "Total Rentals") +
+  theme_minimal()
+```
+
+The graph titled **"Weather Features vs. Total Bike Rentals"** provides a visual analysis of the relationship between several weather-related variables and the total number of bike rentals. Let's break down the insights from each of the four plots:
+
+------------------------------------------------------------------------
+
+### 1. **`atemp` (Apparent Temperature) vs. Total Rentals**
+
+-   **Trend:** Strong positive correlation.
+-   **Insight:** As the apparent temperature increases, the number of bike rentals also increases significantly.
+-   **Interpretation:** People are more likely to rent bikes when the weather feels warmer and more comfortable.
+
+------------------------------------------------------------------------
+
+### 2. **`hum` (Humidity) vs. Total Rentals**
+
+-   **Trend:** Weak negative correlation.
+-   **Insight:** As humidity increases, the number of rentals slightly decreases.
+-   **Interpretation:** Higher humidity may create discomfort, leading to a small reduction in bike usage.
+
+------------------------------------------------------------------------
+
+### 3. **`temp` (Actual Temperature) vs. Total Rentals**
+
+-   **Trend:** Positive correlation, similar to `atemp`.
+-   **Insight:** Warmer temperatures are associated with more bike rentals.
+-   **Interpretation:** Like `atemp`, actual temperature is a key driver of bike usage, indicating seasonal or weather-related patterns.
+
+------------------------------------------------------------------------
+
+### 4. **`windspeed` vs. Total Rentals**
+
+-   **Trend:** Slight negative correlation.
+-   **Insight:** Higher wind speeds are associated with fewer bike rentals.
+-   **Interpretation:** Windy conditions may deter people from choosing to ride a bike.
+
+------------------------------------------------------------------------
+
+### General Observations:
+
+-   **Best Predictor:** `atemp` and `temp` show the strongest positive relationships with bike rentals, suggesting they are more influential in predicting rental behavior.
+
+-   **Least Impactful:** `hum` and `windspeed` have weaker effects, though still relevant.
+
+-   **Helpful for:**
+
+    -   **Predictive Modeling:** Identifying which weather variables to prioritize in forecasting models.
+    -   **Business Decisions:** Informing staffing or inventory needs for bike rental services based on weather forecasts.
+    -   **Policy Making:** Urban planners can use this to plan infrastructure improvements aligned with weather-related usage trends.
+
+------------------------------------------------------------------------
