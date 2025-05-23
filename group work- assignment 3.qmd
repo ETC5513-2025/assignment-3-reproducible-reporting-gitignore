@@ -1,7 +1,15 @@
 ---
-title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility in Australian Cities"
-format: html
+title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
 editor: visual
+author:
+  - Izzul Fattah Aji Pratama
+  - Thuy Nhu Nguyen
+  - Bhuvana Chandrasekar
+
 ---
 
 ## Introduction
