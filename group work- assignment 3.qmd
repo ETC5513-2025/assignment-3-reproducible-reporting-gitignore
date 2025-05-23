@@ -8,7 +8,8 @@ editor: visual
 library(tidyverse)
 library(lubridate)
 library(ggplot2)
-
+```
+```{r}}
 day_data <- read_csv("data/bike+sharing+dataset/day.csv") %>%
   mutate(date = ymd(dteday),
          day_type = if_else(weekday %in% c(0, 6), "Weekend", "Weekday"))
