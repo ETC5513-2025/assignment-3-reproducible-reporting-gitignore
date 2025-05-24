@@ -1,324 +1,19 @@
 ---
 title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
-format: 
-  html:
-    toc: true
-    toc-depth: 2
-editor: visual
 author:
   - Izzul Fattah Aji Pratama
   - Thuy Nhu Nguyen
   - Bhuvana Chandrasekar
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+editor: visual
+bibliography: references.bib
+csl: apa.csl
 ---
-```{r setup, include=FALSE}
-# Load libraries and read datasets
-library(tidyverse)
-library(lubridate)
-library(ggplot2)
-```
-```{r}}
-day_data <- read_csv("data/bike+sharing+dataset/day.csv") %>%
-  mutate(date = ymd(dteday),
-         day_type = if_else(weekday %in% c(0, 6), "Weekend", "Weekday"))
-```
-## Introduction
 
-This report explores features affecting bike rentals:
-
--   **Weather conditions**: `temp`, `atemp`, `hum`, `windspeed`
-
--   **Time-based variables**: `hour`, `weekday`, `workingday`, `holiday`
-
-
-## Data Structure
-
-```{r}
-head(day_data)
-head(hour_data)
-```
-
-
-------------------------------------------------------------------------
-
-## Weather Features Correlation
-
-This correlation matrix shows the pairwise relationships between the weather variables (temp, atemp, hum, windspeed) and the total number of rentals (cnt).
-
-```{r}
-day_data %>%
-  select(temp, atemp, hum, windspeed, cnt) %>%
-  cor() %>%
-  round(2)
-```
-
-**Strong Positive Correlations**
-
-**temp and cnt**: 0.63 Higher temperatures are associated with more rentals. Warm weather encourages biking.
-
-**atemp and cnt**: 0.63 “Feels-like” temperature also shows the same strong positive influence. Since it's what riders actually experience, it's intuitive that this aligns with temp. Weak/Negative Correlations
-
-**hum and cnt**: -0.10 A slightly negative correlation means higher humidity slightly reduces bike rentals, but it's not a major factor.
-
-**windspeed and cnt**: -0.23 Moderate negative relationship: Windier days discourage biking, but the effect is relatively weak.
-
-**Feature Redundancy**
-
-**temp and atemp**: 0.99 Almost perfect correlation means they contain nearly the same information. You might consider using just one in modeling to avoid redundancy.
-
-------------------------------------------------------------------------
-
-## Weather vs Rentals
-
-```{r}
-day_data %>%
-  pivot_longer(cols = c(temp, atemp, hum, windspeed),
-               names_to = "feature", values_to = "value") %>%
-  ggplot(aes(x = value, y = cnt)) +
-  geom_point(alpha = 0.5, color = "#3182bd") +
-  geom_smooth(method = "lm", color = "darkred") +
-  facet_wrap(~feature, scales = "free_x") +
-  labs(title = "Weather Features vs. Total Bike Rentals",
-       x = "Feature Value", y = "Total Rentals") +
-  theme_minimal()
-```
-
-The graph titled **"Weather Features vs. Total Bike Rentals"** provides a visual analysis of the relationship between several weather-related variables and the total number of bike rentals. Let's break down the insights from each of the four plots:
-
-------------------------------------------------------------------------
-
-### 1. **`atemp` (Apparent Temperature) vs. Total Rentals**
-
--   **Trend:** Strong positive correlation.
--   **Insight:** As the apparent temperature increases, the number of bike rentals also increases significantly.
--   **Interpretation:** People are more likely to rent bikes when the weather feels warmer and more comfortable.
-
-------------------------------------------------------------------------
-
-### 2. **`hum` (Humidity) vs. Total Rentals**
-
--   **Trend:** Weak negative correlation.
--   **Insight:** As humidity increases, the number of rentals slightly decreases.
--   **Interpretation:** Higher humidity may create discomfort, leading to a small reduction in bike usage.
-
-------------------------------------------------------------------------
-
-### 3. **`temp` (Actual Temperature) vs. Total Rentals**
-
--   **Trend:** Positive correlation, similar to `atemp`.
--   **Insight:** Warmer temperatures are associated with more bike rentals.
--   **Interpretation:** Like `atemp`, actual temperature is a key driver of bike usage, indicating seasonal or weather-related patterns.
-
-------------------------------------------------------------------------
-
-### 4. **`windspeed` vs. Total Rentals**
-
--   **Trend:** Slight negative correlation.
--   **Insight:** Higher wind speeds are associated with fewer bike rentals.
--   **Interpretation:** Windy conditions may deter people from choosing to ride a bike.
-
-------------------------------------------------------------------------
-
-### General Observations:
-
--   **Best Predictor:** `atemp` and `temp` show the strongest positive relationships with bike rentals, suggesting they are more influential in predicting rental behavior.
-
--   **Least Impactful:** `hum` and `windspeed` have weaker effects, though still relevant.
-
--   **Helpful for:**
-    -   **Predictive Modeling:** Identifying which weather variables to prioritize in forecasting models.
-    -   **Business Decisions:** Informing staffing or inventory needs for bike rental services based on weather forecasts.
-    -   **Policy Making:** Urban planners can use this to plan infrastructure improvements aligned with weather-related usage trends.
-=======
-
-## Hourly Rental Patterns
-
-```{r}
-hour_data %>%
-  group_by(hr) %>%
-  summarise(avg_rentals = mean(cnt)) %>%
-  ggplot(aes(x = hr, y = avg_rentals)) +
-  geom_col(fill = "skyblue") +
-  labs(title = "Average Hourly Bike Rentals", x = "Hour", y = "Average Rentals") +
-  theme_minimal()
-```
-
-The bar chart titled **"Average Hourly Bike Rentals"** presents the mean number of bike rentals across each hour of the day, offering valuable insight into daily usage patterns.
-
-------------------------------------------------------------------------
-
-### **Key Insights from the Chart:**
-
-#### 1. **Two Prominent Peaks:**
-
--   **Morning Peak (\~8 AM):**
-
-    -   Clear spike in average rentals around 8 AM.
-    -   Likely corresponds to **commuting hours** for work or school.
-
--   **Evening Peak (\~5–6 PM):**
-
-    -   Highest peak occurs around 5–6 PM.
-    -   Reflects **commute back home** or post-work travel.
-
-#### 2. **Midday Stability:**
-
--   Between **11 AM and 3 PM**, rentals are steady but lower than peak times.
--   May include **lunch breaks**, casual or leisure usage.
-
-#### 3. **Low Usage at Night:**
-
--   From **midnight to 5 AM**, rentals are minimal.
--   Expected due to **lower demand and limited activity** during nighttime.
-
-#### 4. **Gradual Build-up:**
-
--   Rentals start increasing sharply from around **6 AM**, indicating the **start of the day’s activity**.
-
-------------------------------------------------------------------------
-
-### **Use:**
-
-#### **Operational Efficiency:**
-
--   **Rebalancing Bikes**: Optimize bike placement and availability ahead of peak hours.
--   **Maintenance Scheduling**: Perform maintenance during low-usage hours (e.g., 2–4 AM).
-
-#### **User Behavior Understanding:**
-
--   Confirms that the system is heavily used by **commuters**, emphasizing the importance of **rush hour planning**.
-
-#### **Infrastructure Planning:**
-
--   City planners or bike-sharing companies can plan **dedicated bike lanes or docking stations** where demand spikes.
-
-
-### Summary:
-
-This hourly analysis highlights a **classic bimodal usage pattern** centered around commuting hours. Understanding this pattern helps improve user experience, resource allocation, and urban transport integration.
-
-
-## Weekday vs Weekend
-
-This graph compares rental trends on weekdays vs. weekends across the full time period.
-
-```{r}
-# Weekday vs Weekend
- ggplot(day_data, aes(x = date, y = cnt, color = day_type)) +
-  geom_line(alpha = 0.7) +
-  geom_smooth(se = FALSE, method = "loess", span = 0.2) +
-  scale_color_manual(values = c("Weekday" = "#1b9e77", "Weekend" = "#d95f02")) +
-  labs(title = "Weekday vs Weekend Rentals", x = "Date", y = "Rentals", color = "Day Type")
-```
-
-The graph titled **"Weekday vs Weekend Rentals"** provides a time-series comparison of bike rental trends across weekdays and weekends. Let’s explore the key insights and their significance:
-
-
-
-### **Insights from the Graph:**
-
-#### 1. **Overall Trend:**
-
--   Both weekday and weekend rentals follow a **seasonal pattern**, with higher usage during warmer months (peaking mid-year) and lower usage during colder months (start and end of the year).
--   The trends repeat over two years, suggesting strong seasonality in bike rentals.
-
-#### 2. **Weekday Rentals (Green Line):**
-
--   Generally **higher and more consistent** than weekend rentals.
--   The green smoothed line shows stable high points during peak months (summer), likely due to daily commuting.
-
-#### 3. **Weekend Rentals (Orange Line):**
-
--   More **variable and spiky**, possibly influenced by weather, events, or leisure activities.
--   Although lower than weekday rentals on average, weekends still show strong peaks during favorable months.
-
-### Summary:
-
-This graph clearly shows that **bike rental patterns differ significantly between weekdays and weekends**, with **seasonality and consistency** being key differences. It helps identify **when and how users engage** with the service, which is crucial for data-driven decision making in urban mobility planning or bike-sharing operations.
-
-```{r}
-
-# Plot: Date vs Rental Count
-ggplot(day_data, aes(x = dteday, y = cnt)) +
-  geom_line(color = "#1f77b4", size = 1) +
-  labs(
-    title = "Daily Bike Rentals Over Time",
-    x = "Date",
-    y = "Total Rentals"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
-```
-
-1.  **Clear Upward Trend in First Year**:
-
-Rentals steadily increase from early 2011 through mid-2011. Indicates growing adoption of the bike-sharing service, possibly due to awareness or seasonal effects.
-
-2.  **Strong Seasonal Patterns**:
-
-Peaks are consistently seen during summer months (June–August). Dips in usage appear in winter months, likely due to colder weather and reduced ridership.
-
-3.  **Sharp Spikes and Drops**:
-
-Several days show sudden drops (close to 0) and spikes: Likely due to missing data, system outages, or extreme weather. Worth investigating further using weather data or logs.
-
-4.  **Higher Plateau in Second Year**:
-
-In 2012, daily rentals are consistently higher compared to 2011. This suggests sustained user base growth and possibly expansion of infrastructure.
-
-```{r}
-# Summer 2011 Focus
- day_data %>%
-  filter(date >= "2011-06-01", date <= "2011-08-31") %>%
-  ggplot(aes(x = date, y = cnt)) +
-  geom_line(color = "#31a354") +
-  geom_smooth(se = FALSE, method = "loess", span = 0.4, color = "#e34a33") +
-  labs(title = "Bike Rentals in Summer 2011", x = "Date", y = "Rentals")
-```
-
-What the Chart Shows: Green Line: Raw daily bike rental counts. Red LOESS Curve: Smoothed trend to highlight overall direction (captures nonlinear patterns).
-
-### Key Observations:
-
-**Relatively Stable Start (June)**:
-
-Rentals fluctuate around 4800–5200. Early signs of stability as the program matured post-launch.
-
-**Rising Trend Toward July**: Clear upward drift through mid-to-late June into July. Possibly reflects better weather, longer daylight hours, or increased adoption.
-
-**Mid-July Peak**: Several days around 6000 rentals—among the highest in the summer. Could correspond to events or peak seasonal demand.
-
-**August Dip**: Rentals decline in early-to-mid August. A few drops below 4000 rentals—possibly due to weather events, vacations, or operational issues.
-
-**End-of-August Anomaly**: A sudden sharp drop near end of August (close to 0 rentals). This is likely a data gap, outage, or recording error.
-
-### Use:
-
-**Operational Planning**: Staffing and maintenance could be scaled with demand (peaking July).
-
-**Event/Promotion Timing**: Best results likely mid-summer.
-
-**Anomaly Handling**: Investigate sharp drops for data integrity.
-
-------------------------------------------------------------------------
-
-## Summary of Insights
-
-| Feature            | Effect on Rentals                        |
-|--------------------|------------------------------------------|
-| Temperature        | Strong positive impact                   |
-| Feels-like Temp    | Similar to temperature                   |
-| Humidity           | Mild negative impact                     |
-| Windspeed          | Weak correlation                         |
-| Hour of Day        | Peaks during morning and evening commute |
-| Weekday vs Weekend | Higher and consistent on weekdays        |
-| Time Progression   | General upward trend year over year      |
-
-
-------------------------------------------------------------------------
-=======
 ## Executive Summary
 
 ::: {style="text-align: justify;"}
@@ -339,15 +34,29 @@ University environments play a significant role in shaping and reflecting these 
 Beyond campuses, the broader urban adoption of bike sharing connects with evolving transportation patterns influenced by delivery platforms, active lifestyle trends, and environmental awareness. Understanding the interplay between individual cycling habits and shared bike systems is crucial for developing integrated, sustainable urban transport policies in Australian cities.
 :::
 
+------------------------------------------------------------------------
+
+## Summary of Insights
+
+| Feature            | Effect on Rentals                        |
+|--------------------|------------------------------------------|
+| Temperature        | Strong positive impact                   |
+| Feels-like Temp    | Similar to temperature                   |
+| Humidity           | Mild negative impact                     |
+| Windspeed          | Weak correlation                         |
+| Hour of Day        | Peaks during morning and evening commute |
+| Weekday vs Weekend | Higher and consistent on weekdays        |
+| Time Progression   | General upward trend year over year      |
+
 ## Methodology:
 
-This analysis uses the **Bike Sharing Dataset** from the UCI Machine Learning Repository, containing two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
+This report uses the Bike Sharing Dataset from Washington D.C., which contains hourly and daily records for 2011–2012 [@fanaee2014event].It contains two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
 
 The datasets are complete, with no missing values. They contain weather metrics, timestamps, and detailed user counts. We categorized the variables into three analytical areas:
 
 1\. **Environmental conditions**: Continuous variables include temperature (`temp`), perceived temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`) — all normalized. These were sourced from \`hour.csv\` and used to assess how weather influences demand.
 
-2\. **Temporal factors**: These include hour of day (`hr`), day of week (`weekday`), holidays, and working days (`workingday`). `hour.csv`was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using `season` (1 = Winter to 4 = Fall) and `mnth` from `day.csv`.
+2\. **Temporal factors**: These include hour of day (`hr`), day of week (`weekday`), holidays, and working days (`workingday`). `hour.csv`was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using `season` (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall) and `mnth` from `day.csv`.
 
 3\. **User behavior**: Total rentals (`cnt`) are split into `casual`(non-registered) and `registered` (subscribers). `day.csv` was used to study seasonal variation in user types, while `hour.csv` was used for finer temporal granularity.
 
@@ -371,7 +80,7 @@ day_data %>%
   geom_col(fill = "lightblue") +
   labs(
     title = "Average Total Users by Season",
-    x = "Season (1=Winter, ..., 4=Fall)",
+    x = "Season (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall)",
     y = "Average Users"
   )
 
@@ -393,11 +102,54 @@ hour_data %>%
 
 ```
 
+```{r setup, include=FALSE, echo=FALSE}
+# Load libraries and read datasets
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+```
+
 ## Results:
 
-### 1. Seasonal Trends and User Behavior
+### Hourly and Weather-Based Rental Patterns
+
+As shown in @fig-hourly-rentals, rentals peak sharply around 8 AM and 5–6 PM, reflecting weekday commuting. Midday usage is moderate, and demand drops overnight. @fig-weather-scatter illustrates weather influence: both temperature and apparent temperature have strong positive correlations with rentals.Previous research confirms that temperature strongly influences bike rental demand [@li2015bike]. In contrast, humidity and windspeed show weaker negative effects — humid or windy conditions discourage biking slightly, but don’t deter core users. These insights highlight the dual influence of structured commuter behavior and environmental comfort.
+
+### Seasonal Trends and User Behavior
 
 To examine how bike usage shifts across seasons, we analyzed total rentals (`cnt`) and user type composition. @fig-user-by-season hows that demand peaks in summer and fall, while winter records the lowest activity. @tbl-user-share-by-season breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.
+
+```{r}
+#| label: fig-hourly-rentals
+#| fig-cap: "Average Hourly Bike Rentals"
+#| echo: false
+
+hour_data %>%
+  group_by(hr) %>%
+  summarise(avg_rentals = mean(cnt)) %>%
+  ggplot(aes(x = hr, y = avg_rentals)) +
+  geom_col(fill = "skyblue") +
+  labs(title = "Average Hourly Bike Rentals", x = "Hour", y = "Average Rentals") +
+  theme_minimal()
+
+```
+
+```{r}
+#| label: fig-weather-scatter
+#| fig-cap: "Weather Features vs. Total Bike Rentals"
+#| echo: false
+
+day_data %>%
+  pivot_longer(cols = c(temp, atemp, hum, windspeed),
+               names_to = "feature", values_to = "value") %>%
+  ggplot(aes(x = value, y = cnt)) +
+  geom_point(alpha = 0.5, color = "#3182bd") +
+  geom_smooth(method = "lm", color = "darkred") +
+  facet_wrap(~feature, scales = "free_x") +
+  labs(x = "Feature Value", y = "Total Rentals") +
+  theme_minimal()
+
+```
 
 ```{r,echo=FALSE}
 #| label: fig-user-by-season
@@ -410,7 +162,7 @@ day_data %>%
   ggplot(aes(x = factor(season), y = avg_count, fill = user_type)) +
   geom_col(position = "dodge") +
   labs(
-    x = "Season (1=Winter, ..., 4=Fall)",
+    x = "Season (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall)",
     y = "Average Rentals",
     fill = "User Type"
   )
@@ -442,19 +194,18 @@ day_data %>%
 
 ## Discussion, Conclusion and Recommendations:
 
-This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform decision-making.
+This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather conditions, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform data-driven decision-making.
 
-Our results showed strong seasonal and hourly trends. Rental demand peaked in summer and fall, with significantly higher casual user activity in warmer months, suggesting weather-sensitive, possibly tourist-driven behavior. Registered users, in contrast, showed consistent usage throughout the year and across weekdays, indicating habitual commuting. Additionally, rental volumes varied by hour, with predictable peaks during morning and evening commute times on weekdays, and a more gradual midday rise on weekends.
+Our findings revealed strong seasonal and hourly patterns. Rental demand peaked in summer and fall, with a surge in casual user activity during warmer months — suggesting weather-sensitive, potentially tourist-driven behavior. In contrast, registered users displayed consistent usage throughout the year and weekdays, indicative of habitual commuting. Rental volumes also followed predictable daily cycles, with distinct peaks during morning and evening commute hours and more gradual midday rises on weekends.
 
-These findings suggest that registered users represent a loyal, time-consistent base, while casual users drive demand spikes that are highly sensitive to weather and season. This distinction is critical for bike-sharing operators and city planners when allocating resources or tailoring marketing strategies.
+These trends show that registered users form a reliable commuter base, while casual users introduce seasonal and environmental variability. This distinction is critical for bike-sharing companies, city planners, and transportation authorities when developing policies, allocating fleet resources, and adjusting marketing strategies.
 
 We recommend:
 
--   Increasing bike availability and docking stations near recreational zones in summer
+-   Increasing bike availability and docking stations near recreational or high-footfall areas in summer\
+-   Ensuring year-round service quality and infrastructure for commuter-heavy routes\
+-   Using time-based demand trends to optimize staff scheduling, rebalancing logistics, and promotional campaigns
 
--   Prioritizing maintenance and reliability of service for commuters year-round
+Importantly, our analysis is reproducible and adaptable. The approach we used — integrating open data with R, Quarto, and Git — can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
 
--   Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns
-
-This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
-
+## References
