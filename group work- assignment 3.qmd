@@ -14,17 +14,15 @@ bibliography: references.bib
 csl: apa.csl
 ---
 
+::: {style="text-align: justify;"}
 ## Executive Summary
 
-::: {style="text-align: justify;"}
 This report analyzes two years of data from Washington D.C.'s Capital Bikeshare system, revealing how environmental and temporal factors influence bike usage patterns. The findings highlight the strong link between favorable weather, holidays, and bike rental trends, with implications for urban transport systems.
 
 Applying these insights to Australia, the report underscores the significant role of cycling culture, particularly among university students, in sustaining bike-sharing programs like Lime e-bikes. The study emphasizes the potential of bike-sharing systems to promote sustainable, healthy, and efficient mobility.
-:::
 
 ## Introduction
 
-::: {style="text-align: justify;"}
 Urban transportation is shifting toward more sustainable and efficient mobility solutions. Bike-sharing programs have emerged as a popular option, offering flexible access to bicycles, including e-bikes for short-distance urban travel. These systems help reduce traffic congestion, lower emissions, and promote healthy lifestyles.
 
 This report analyzes two years of data from the Capital Bikeshare system in Washington D.C. (2011–2012), capturing rental patterns across time and weather conditions. The dataset includes both daily and hourly records with variables such as temperature, humidity, season, weekday, and user type.
@@ -52,6 +50,7 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 
 ------------------------------------------------------------------------
 
+::: {style="text-align: justify;"}
 ## Methodology:
 
 This report uses the Bike Sharing Dataset from Washington D.C., which contains hourly and daily records for 2011–2012 [@fanaee2014event].It contains two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
@@ -69,6 +68,7 @@ All analysis was performed in **R**, using `tidyverse` for data wrangling and `g
 @fig-season-users shows average total users by season using `day.csv`, capturing clear seasonal demand shifts.
 
 @tbl-hourly-weektype uses `hour.csv` to show average hourly rentals on weekdays vs. weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.
+:::
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 #| label: fig-season-users
@@ -113,6 +113,7 @@ library(lubridate)
 library(ggplot2)
 ```
 
+::: {style="text-align: justify;"}
 ## Results:
 
 ### Hourly and Weather-Based Rental Patterns
@@ -122,6 +123,7 @@ As shown in @fig-hourly-rentals, rentals peak sharply around 8 AM and 5–6 PM, 
 ### Seasonal Trends and User Behavior
 
 To examine how bike usage shifts across seasons, we analyzed total rentals (`cnt`) and user type composition. @fig-user-by-season hows that demand peaks in summer and fall, while winter records the lowest activity. @tbl-user-share-by-season breaks down usage by user type, revealing that registered users dominate in all seasons but especially in winter, suggesting habitual commuting behavior. In contrast, casual user activity more than doubles in summer, indicating recreational or tourist usage. These seasonal shifts suggest that demand is driven by both weather and user intent, with commuters being more consistent and casual users more season-sensitive.
+:::
 
 ```{r}
 #| label: fig-hourly-rentals
@@ -196,6 +198,7 @@ day_data %>%
 
 ```
 
+::: {style="text-align: justify;"}
 ## Discussion, Conclusion and Recommendations:
 
 This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather conditions, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform data-driven decision-making.
@@ -206,10 +209,28 @@ These trends show that registered users form a reliable commuter base, while cas
 
 We recommend:
 
--   Increasing bike availability and docking stations near recreational or high-footfall areas in summer\
--   Ensuring year-round service quality and infrastructure for commuter-heavy routes\
+-   Increasing bike availability and docking stations near recreational or high-footfall areas in summer
+-   Ensuring year-round service quality and infrastructure for commuter-heavy routes
 -   Using time-based demand trends to optimize staff scheduling, rebalancing logistics, and promotional campaigns
 
 Importantly, our analysis is reproducible and adaptable. The approach we used — integrating open data with R, Quarto, and Git — can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
+:::
 
 ## References
+
+```         
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn M,
+  Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D, Wilke
+  C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” _Journal of Open Source Software_, *4*(43), 1686.
+  doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
+```
+
+```         
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+```
+
+Fanaee-T, H. (2013). Bike Sharing \[Dataset\]. UCI Machine Learning Repository. <https://doi.org/10.24432/C5W894.>
+
+## AI Acknowledgment
+
+There are AI support for grammar checking.
