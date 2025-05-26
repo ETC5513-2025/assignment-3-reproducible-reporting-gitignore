@@ -1,20 +1,11 @@
 ---
 title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
-author:
-  - Izzul Fattah Aji Pratama
-  - Thuy Nhu Nguyen
-  - Bhuvana Chandrasekar
+
 format:
   revealjs:
-<<<<<<< HEAD
     theme: solarized        
     slide-number: true   
     toc: false
-=======
-    theme: solarized        # or try: default, serif, solarized, night
-    slide-number: true   # shows current slide number
-    toc: false           # no table of contents slide
->>>>>>> 8edc42eb610fd9af04343f3e0fbde2b543584e22
 editor: visual
 ---
 
@@ -24,11 +15,8 @@ day_data <- read.csv("data/day.csv")
 hour_data <- read.csv("data/hour.csv")
 ```
 
-## Title Slide
+## Team
 
-**From Data to Action: Leveraging Bike-Sharing Patterns**\
-*ETC5513 – Week 12 Presentation*\
-**Team:**\
 - Izzul Fattah Aji Pratama\
 - Thuy Nhu Nguyen\
 - Bhuvana Chandrasekar
