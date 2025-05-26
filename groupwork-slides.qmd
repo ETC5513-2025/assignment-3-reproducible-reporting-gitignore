@@ -1,0 +1,135 @@
+---
+title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
+author:
+  - Izzul Fattah Aji Pratama
+  - Thuy Nhu Nguyen
+  - Bhuvana Chandrasekar
+format:
+  revealjs:
+    theme: solarized        # or try: default, serif, solarized, night
+    slide-number: true   # shows current slide number
+    toc: false           # no table of contents slide
+bibliography: references.bib
+csl: apa.csl
+editor: visual
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+day_data <- read.csv("data/day.csv")
+hour_data <- read.csv("data/hour.csv")
+```
+
+## Title Slide
+
+**From Data to Action: Leveraging Bike-Sharing Patterns**\
+*ETC5513 – Week 12 Presentation*\
+**Team:**\
+- Izzul Fattah Aji Pratama\
+- Thuy Nhu Nguyen\
+- Bhuvana Chandrasekar
+
+## Introduction
+
+-   Urban transport is shifting toward sustainable alternatives\
+-   Bike sharing promotes health, efficiency, and lower emissions\
+-   Our goal: analyze rental trends and make recommendations
+
+## Dataset Overview
+
+-   **Source**: UCI Machine Learning Repository [@fanaee2014event]\
+-   **Timeframe**: 2011–2012\
+-   **Data**: `day.csv` and `hour.csv` — weather, time, users
+
+## Methodology
+
+-   Tools: R, tidyverse, ggplot2, Quarto, Git\
+-   Explored trends by weather, season, and time\
+-   Collaboration via GitHub with reproducible reports
+
+## Weather Effects
+
+-   Rentals increase with temperature and decrease with humidity\
+
+-   Wind speed has a slight negative effect\
+
+-   Visualization: *weather vs rentals*
+
+    ```{r, warning=FALSE, message=FALSE}
+    day_data %>%
+      pivot_longer(cols = c(temp, atemp, hum, windspeed),
+                   names_to = "feature", values_to = "value") %>%
+      ggplot(aes(x = value, y = cnt)) +
+      geom_point(alpha = 0.3, color = "#3182bd") +
+      geom_smooth(method = "lm", se = FALSE, color = "darkred") +
+      facet_wrap(~feature, scales = "free") +
+      labs(title = "Weather Features vs. Total Rentals", x = "Value", y = "Total Rentals") +
+      theme_bw()
+
+    ```
+
+## Hourly Trends
+
+-   Peak rentals during commute hours: 8 AM and 5–6 PM\
+
+-   Weekends show midday increases, more variability
+
+    ```{r}
+    hour_data %>%
+      mutate(weektype = ifelse(weekday %in% c(0, 6), "Weekend", "Weekday")) %>%
+      pivot_longer(cols = c(casual, registered), names_to = "user_type", values_to = "count") %>%
+      group_by(hr, user_type, weektype) %>%
+      summarise(avg_count = mean(count), .groups = "drop") %>%
+      ggplot(aes(x = hr, y = avg_count, fill = user_type)) +
+      geom_col(position = "stack") +
+      facet_wrap(~weektype) +
+      labs(
+        title = "Hourly Rentals by User Type on Weekdays vs Weekends",
+        x = "Hour of Day",
+        y = "Average Rentals",
+        fill = "User Type"
+      ) +
+      theme_bw()
+
+    ```
+
+## Seasonal & User Types
+
+-   Casual users increase in summer\
+
+-   Registered users dominate during winter\
+
+    ```{r}
+    day_data %>%
+      pivot_longer(cols = c(casual, registered), names_to = "user_type", values_to = "count") %>%
+      group_by(season, user_type) %>%
+      summarise(avg_count = mean(count), .groups = "drop") %>%
+      ggplot(aes(x = factor(season), y = avg_count, fill = user_type)) +
+      geom_col(position = "dodge") +
+      labs(title = "Average Users by Season", x = "Season (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall)", y = "Average Rentals", fill = "User Type") +
+      theme_bw()
+
+    ```
+
+## Key Insights
+
+| Feature            | Effect on Rentals                        |
+|--------------------|------------------------------------------|
+| Temperature        | Strong positive impact                   |
+| Feels-like Temp    | Similar to temperature                   |
+| Humidity           | Mild negative impact                     |
+| Windspeed          | Weak correlation                         |
+| Hour of Day        | Peaks during morning and evening commute |
+| Weekday vs Weekend | Higher and consistent on weekdays        |
+| Time Progression   | General upward trend year over year      |
+
+
+## Recommendations
+
+-   Add bikes in tourist zones during summer\
+-   Prioritize commuters with reliable service\
+-   Plan fleet and staff using hourly demand
+
+## Thank You
+
+Questions? We're happy to discuss our findings.

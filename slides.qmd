@@ -1,0 +1,113 @@
+---
+title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
+author:
+  - Izzul Fattah Aji Pratama
+  - Thuy Nhu Nguyen
+  - Bhuvana Chandrasekar
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    toc: false
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r}
+
+---
+
+## Title Slide  
+**From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility**  
+ETC5513 – Assignment 3 Presentation  
+**Team Members:**  
+- Izzul Fattah Aji Pratama  
+- Thuy Nhu Nguyen  
+- Bhuvana Chandrasekar  
+
+---
+
+## Introduction *(Thuy)*
+
+- Why bike sharing is relevant for modern cities  
+- Growing demand for sustainable transport  
+- Australia’s urban cycling culture (especially students)  
+- Report aim: analyze rental patterns to uncover demand drivers
+
+---
+
+## Dataset Overview *(Thuy)*
+
+- **Source**: UCI ML Repository [@fanaee2014event]  
+- **Data range**: 2011–2012  
+- **Files**: `day.csv` (daily), `hour.csv` (hourly)  
+- **Variables**: temp, humidity, windspeed, seasons, user type, etc.  
+
+---
+
+## Methodology *(Izzul)*
+
+- Tools used: `R`, `tidyverse`, `ggplot2`, `Quarto`, `Git`  
+- Data grouped by weather, time, and user type  
+- Branches for sections; merged into reproducible report  
+- Collaborative version control with conflict resolution
+
+---
+
+## Weather vs Rentals *(Izzul)*
+
+- Temp and “feels like” temp positively influence rentals  
+- Humidity and windspeed show weaker negative impact  
+- *Include scatter or facet chart (optional)*
+
+---
+
+## Hourly Rental Patterns *(Thuy)*
+
+- Peaks at 8 AM and 5–6 PM = commute hours  
+- Weekdays show consistent patterns; weekends more variable  
+- *Optional: plot of hour vs. average count by weektype*
+
+---
+
+## Seasonal Trends & User Types *(Bhuvana)*
+
+- Rentals highest in summer & fall  
+- Registered users dominate in winter  
+- Casual users rise sharply in warmer seasons  
+- *Optional bar plot or table*
+
+---
+
+## Key Findings *(Bhuvana)*
+
+| Factor         | Insight                              |
+|----------------|--------------------------------------|
+| Temperature    | Strong positive impact               |
+| Time of day    | Commuting hours = peak usage         |
+| Season         | Summer & fall = highest demand       |
+| User type      | Registered = consistent; casual = seasonal |
+
+---
+
+## Recommendations *(Bhuvana)*
+
+- Add more docking stations in summer tourist areas  
+- Prioritize maintenance for weekday commuter hubs  
+- Use rental data to guide staff rebalancing & marketing  
+- Apply this model in Australian cities or universities
+
+---
+
+## Thank You / Q&A *(Izzul)*
+
+> Questions?  
+Let’s discuss how cities can better support sustainable transport.
+
+---
+
+## References
+
+<!-- Automatically generated from in-text citations -->
+
+```

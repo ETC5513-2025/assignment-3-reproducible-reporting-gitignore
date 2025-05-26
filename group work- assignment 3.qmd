@@ -6,6 +6,7 @@ author:
   - Bhuvana Chandrasekar
 format: 
   html:
+    theme: litera
     toc: true
     toc-depth: 2
     number-sections: true
@@ -117,7 +118,7 @@ library(ggplot2)
 
 ### Hourly and Weather-Based Rental Patterns
 
-As shown in @fig-hourly-rentals, rentals peak sharply around 8 AM and 5–6 PM, reflecting weekday commuting. Midday usage is moderate, and demand drops overnight. @fig-weather-scatter illustrates weather influence: both temperature and apparent temperature have strong positive correlations with rentals.Previous research confirms that temperature strongly influences bike rental demand [@li2015bike]. In contrast, humidity and windspeed show weaker negative effects — humid or windy conditions discourage biking slightly, but don’t deter core users. These insights highlight the dual influence of structured commuter behavior and environmental comfort.
+As shown in @fig-hourly-rentals, rental activity varies by time of day and day type. On weekdays, **registered users** drive sharp peaks around **8 AM and 5–6 PM**, aligning with typical commute hours. On weekends, rentals are more evenly distributed, with **casual users** becoming more prominent around midday. This pattern reveals distinct behavioral trends between commuter and leisure riders. @fig-weather-scatterr shows that **temperature** and **apparent temperature** positively correlate with total rentals, while **humidity** and **windspeed** have weaker negative effects \[\@li2015bike\]. These findings highlight the combined impact of structured routines and weather conditions on bike-sharing demand.
 
 ### Seasonal Trends and User Behavior
 
@@ -125,16 +126,25 @@ To examine how bike usage shifts across seasons, we analyzed total rentals (`cnt
 
 ```{r}
 #| label: fig-hourly-rentals
-#| fig-cap: "Average Hourly Bike Rentals"
+#| fig-cap: "Average Hourly Bike Rentals on Weekdays vs Weekends"
 #| echo: false
 
 hour_data %>%
-  group_by(hr) %>%
-  summarise(avg_rentals = mean(cnt)) %>%
-  ggplot(aes(x = hr, y = avg_rentals)) +
-  geom_col(fill = "skyblue") +
-  labs(title = "Average Hourly Bike Rentals", x = "Hour", y = "Average Rentals") +
+  mutate(weektype = ifelse(weekday %in% c(0, 6), "Weekend", "Weekday")) %>%
+  pivot_longer(cols = c(casual, registered), names_to = "user_type", values_to = "count") %>%
+  group_by(hr, user_type, weektype) %>%
+  summarise(avg_count = mean(count), .groups = "drop") %>%
+  ggplot(aes(x = hr, y = avg_count, fill = user_type)) +
+  geom_col(position = "stack") +
+  facet_wrap(~weektype) +
+  labs(
+    title = "Hourly Rentals by User Type on Weekdays vs Weekends",
+    x = "Hour of Day",
+    y = "Average Rentals",
+    fill = "User Type"
+  ) +
   theme_minimal()
+
 
 ```
 
