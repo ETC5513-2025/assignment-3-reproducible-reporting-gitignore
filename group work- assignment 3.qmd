@@ -1,21 +1,33 @@
 ---
-title: "From Data to Action: Leveraging Bike-Sharing Patterns"
+title: "**From Data to Action: Leveraging Bike-Sharing Patterns**"
 author: 
-  - Izzul Fattah Aji Pratama
-  - Thuy Nhu Nguyen
-  - Bhuvana Chandrasekar
+  - name: Izzul Fattah Aji Pratama
+  - name: Thuy Nhu Nguyen
+  - name: Bhuvana Chandrasekar
+  
+date: today
+title-block-style: default
 format:
   html:
     theme: litera 
     toc: true
     toc-depth: 2
     number-sections: true
+  pdf:
+    documentclass: article
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    mainfont: "Times New Roman"
+    fontsize: 12pt
+    linestretch: 1.5
+    include-in-header: newpage.tex
+    keep-tex: true
 bibliography: references.bib
 csl: apa.csl
 editor: visual
 ---
 
-::: {style="text-align: justify;"}
 ## Executive Summary
 
 This report analyzes two years of data from Washington D.C.'s Capital Bikeshare system, revealing how environmental and temporal factors influence bike usage patterns. The findings highlight the strong link between favorable weather, holidays, and bike rental trends, with implications for urban transport systems.
@@ -24,6 +36,7 @@ Applying these insights to Australia, the report underscores the significant rol
 
 ## Introduction
 
+::: {style="text-align: justify;"}
 Urban transportation is shifting toward more sustainable and efficient mobility solutions. Bike-sharing programs have emerged as a popular option, offering flexible access to bicycles, including e-bikes for short-distance urban travel. These systems help reduce traffic congestion, lower emissions, and promote healthy lifestyles.
 
 This report analyzes two years of data from the Capital Bikeshare system in Washington D.C. (2011–2012), capturing rental patterns across time and weather conditions. The dataset includes both daily and hourly records with variables such as temperature, humidity, season, weekday, and user type.
@@ -37,6 +50,7 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 
 ## Summary of Insights
 
+::: {style="text-align: justify;"}
 | Feature            | Effect on Rentals                        |
 |--------------------|------------------------------------------|
 | Temperature        | Strong positive impact                   |
@@ -48,6 +62,7 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 | Time Progression   | General upward trend year over year      |
 
 ------------------------------------------------------------------------
+:::
 
 ::: {style="text-align: justify;"}
 ## Methodology:
@@ -117,7 +132,7 @@ library(ggplot2)
 
 ### Hourly and Weather-Based Rental Patterns
 
-As shown in @fig-hourly-rentals, rental activity varies by time of day and day type. On weekdays, **registered users** drive sharp peaks around **8 AM and 5–6 PM**, aligning with typical commute hours. On weekends, rentals are more evenly distributed, with **casual users** becoming more prominent around midday. This pattern reveals distinct behavioral trends between commuter and leisure riders. @fig-weather-scatterr shows that **temperature** and **apparent temperature** positively correlate with total rentals, while **humidity** and **windspeed** have weaker negative effects \[\@li2015bike\]. These findings highlight the combined impact of structured routines and weather conditions on bike-sharing demand.
+As shown in @fig-hourly-rentals, rental activity varies by time of day and day type. On weekdays, **registered users** drive sharp peaks around **8 AM and 5–6 PM**, aligning with typical commute hours. On weekends, rentals are more evenly distributed, with **casual users** becoming more prominent around midday. This pattern reveals distinct behavioral trends between commuter and leisure riders. @fig-weather-scatter shows that **temperature** and **apparent temperature** positively correlate with total rentals, while **humidity** and **windspeed** have weaker negative effects [@li2015bike]. These findings highlight the combined impact of structured routines and weather conditions on bike-sharing demand.
 
 ### Seasonal Trends and User Behavior
 
@@ -211,7 +226,7 @@ day_data %>%
 
 This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather conditions, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform data-driven decision-making.
 
-Our findings revealed strong seasonal and hourly patterns. Rental demand peaked in summer and fall, with a surge in casual user activity during warmer months — suggesting weather-sensitive, potentially tourist-driven behavior. In contrast, registered users displayed consistent usage throughout the year and weekdays, indicative of habitual commuting. Rental volumes also followed predictable daily cycles, with distinct peaks during morning and evening commute hours and more gradual midday rises on weekends.
+Our findings revealed strong seasonal and hourly patterns. Rental demand peaked in summer and fall, with a surge in casual user activity during warmer months, suggesting weather-sensitive, potentially tourist-driven behavior. In contrast, registered users displayed consistent usage throughout the year and weekdays, indicative of habitual commuting. Rental volumes also followed predictable daily cycles, with distinct peaks during morning and evening commute hours and more gradual midday rises on weekends.
 
 These trends show that registered users form a reliable commuter base, while casual users introduce seasonal and environmental variability. This distinction is critical for bike-sharing companies, city planners, and transportation authorities when developing policies, allocating fleet resources, and adjusting marketing strategies.
 
@@ -221,14 +236,11 @@ We recommend:
 -   Ensuring year-round service quality and infrastructure for commuter-heavy routes
 -   Using time-based demand trends to optimize staff scheduling, re-balancing logistics, and promotional campaigns
 
-Importantly, our analysis is reproducible and adaptable. The approach we used — integrating open data with R, Quarto, and Git — can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
+Importantly, our analysis is reproducible and adaptable. The approach we used, integrating open data with R, Quarto, and Git, can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
 :::
 
 ## AI Acknowledgment
 
-There are AI support for grammar checking.
+There are AI support for grammar checking, using OpenAI. [Link](https://chatgpt.com/share/683412ac-5054-8002-8523-a5a1b400ef0a)
 
--   Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns
-
-This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
-
+## References

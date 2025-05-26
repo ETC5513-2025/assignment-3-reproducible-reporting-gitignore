@@ -30,27 +30,7 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for citations */
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-      margin-bottom: 0em;
-    }
-    .hanging-indent div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }  </style>
+  </style>
   <link rel="stylesheet" href="groupwork-slides_files/libs/revealjs/dist/theme/quarto-d58ca6e55452da357bd4996cb6e3aa10.css">
   <link href="groupwork-slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="groupwork-slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -192,7 +172,7 @@ Bhuvana Chandrasekar
 <section id="dataset-overview" class="slide level2">
 <h2>Dataset Overview</h2>
 <ul>
-<li><strong>Source</strong>: UCI Machine Learning Repository <span class="citation" data-cites="fanaee2014event">(<a href="#/thank-you" role="doc-biblioref" onclick="">Fanaee-T &amp; Gama, 2014</a>)</span><br>
+<li><strong>Source</strong>: <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Machine Learning Repository</a><br>
 </li>
 <li><strong>Timeframe</strong>: 2011–2012<br>
 </li>
@@ -221,7 +201,7 @@ Bhuvana Chandrasekar
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="groupwork-slides_files/figure-revealjs/unnamed-chunk-1-1.png" width="960"></p>
+<p><img data-src="groupwork-slides_files/figure-revealjs/unnamed-chunk-1-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -314,15 +294,10 @@ Bhuvana Chandrasekar
 <li>Plan fleet and staff using hourly demand</li>
 </ul>
 </section>
-<section id="thank-you" class="slide level2 smaller scrollable">
+<section id="thank-you" class="slide level2">
 <h2>Thank You</h2>
 <p>Questions? We’re happy to discuss our findings. Cheers!</p>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
-<div id="ref-fanaee2014event" class="csl-entry" role="listitem">
-Fanaee-T, H., &amp; Gama, J. (2014). <em>Event labeling combining ensemble detectors and background knowledge</em>. <a href="https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset" class="uri">https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset</a>.
-</div>
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
@@ -540,80 +515,42 @@ Fanaee-T, H., &amp; Gama, J. (2014). <em>Event labeling combining ensemble detec
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {

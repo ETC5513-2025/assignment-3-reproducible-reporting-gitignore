@@ -6,11 +6,9 @@ author:
   - Bhuvana Chandrasekar
 format:
   revealjs:
-    theme: solarized        # or try: default, serif, solarized, night
-    slide-number: true   # shows current slide number
-    toc: false           # no table of contents slide
-bibliography: references.bib
-csl: apa.csl
+    theme: solarized        
+    slide-number: true   
+    toc: false
 editor: visual
 ---
 
@@ -37,7 +35,7 @@ hour_data <- read.csv("data/hour.csv")
 
 ## Dataset Overview
 
--   **Source**: UCI Machine Learning Repository [@fanaee2014event]\
+-   **Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset)\
 -   **Timeframe**: 2011–2012\
 -   **Data**: `day.csv` and `hour.csv` — weather, time, users
 
@@ -55,7 +53,7 @@ hour_data <- read.csv("data/hour.csv")
 
 -   Visualization: *weather vs rentals*
 
-    ```{r, warning=FALSE, message=FALSE}
+    ```{r, warning=FALSE, message=FALSE, fig.width=6, fig.height=3.8}
     day_data %>%
       pivot_longer(cols = c(temp, atemp, hum, windspeed),
                    names_to = "feature", values_to = "value") %>%
@@ -122,7 +120,6 @@ hour_data <- read.csv("data/hour.csv")
 | Hour of Day        | Peaks during morning and evening commute |
 | Weekday vs Weekend | Higher and consistent on weekdays        |
 | Time Progression   | General upward trend year over year      |
-
 
 ## Recommendations
 
