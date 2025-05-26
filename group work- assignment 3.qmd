@@ -1,17 +1,18 @@
 ---
-title: "From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility"
-author:
+title: "From Data to Action: Leveraging Bike-Sharing Patterns"
+author: 
   - Izzul Fattah Aji Pratama
   - Thuy Nhu Nguyen
   - Bhuvana Chandrasekar
-format: 
+format:
   html:
+    theme: litera 
     toc: true
     toc-depth: 2
     number-sections: true
-editor: visual
 bibliography: references.bib
 csl: apa.csl
+editor: visual
 ---
 
 ::: {style="text-align: justify;"}
@@ -27,9 +28,7 @@ Urban transportation is shifting toward more sustainable and efficient mobility 
 
 This report analyzes two years of data from the Capital Bikeshare system in Washington D.C. (2011–2012), capturing rental patterns across time and weather conditions. The dataset includes both daily and hourly records with variables such as temperature, humidity, season, weekday, and user type.
 
-We explore how environmental and temporal factors affect rental demand, user composition, and daily usage trends.
-
-Although U.S.-based, the findings are highly applicable to Australian cities, where cycling is a practical and cultural norm, especially among university students.
+We explore how environmental and temporal factors affect rental demand, user composition, and daily usage trends. Although U.S.-based, the findings are highly applicable to Australian cities, where cycling is a practical and cultural norm, especially among university students.
 
 Campuses often encourage cycling by design, creating ideal conditions for bike-sharing success. Insights from this study can support better planning, resource allocation, and policy development for shared mobility services in Australian urban settings.
 :::
