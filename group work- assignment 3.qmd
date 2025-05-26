@@ -15,7 +15,7 @@ csl: apa.csl
 editor: visual
 ---
 
-::: {style="text-align: justify;"}
+
 ## Executive Summary
 
 This report analyzes two years of data from Washington D.C.'s Capital Bikeshare system, revealing how environmental and temporal factors influence bike usage patterns. The findings highlight the strong link between favorable weather, holidays, and bike rental trends, with implications for urban transport systems.
@@ -23,7 +23,7 @@ This report analyzes two years of data from Washington D.C.'s Capital Bikeshare 
 Applying these insights to Australia, the report underscores the significant role of cycling culture, particularly among university students, in sustaining bike-sharing programs like Lime e-bikes. The study emphasizes the potential of bike-sharing systems to promote sustainable, healthy, and efficient mobility.
 
 ## Introduction
-
+::: {style="text-align: justify;"}
 Urban transportation is shifting toward more sustainable and efficient mobility solutions. Bike-sharing programs have emerged as a popular option, offering flexible access to bicycles, including e-bikes for short-distance urban travel. These systems help reduce traffic congestion, lower emissions, and promote healthy lifestyles.
 
 This report analyzes two years of data from the Capital Bikeshare system in Washington D.C. (2011–2012), capturing rental patterns across time and weather conditions. The dataset includes both daily and hourly records with variables such as temperature, humidity, season, weekday, and user type.
@@ -50,6 +50,7 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 ------------------------------------------------------------------------
 
 ::: {style="text-align: justify;"}
+
 ## Methodology:
 
 This report uses the Bike Sharing Dataset from Washington D.C., which contains hourly and daily records for 2011–2012 [@fanaee2014event].It contains two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.

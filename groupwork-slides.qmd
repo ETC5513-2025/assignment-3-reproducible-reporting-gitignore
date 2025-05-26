@@ -9,8 +9,6 @@ format:
     theme: solarized        # or try: default, serif, solarized, night
     slide-number: true   # shows current slide number
     toc: false           # no table of contents slide
-bibliography: references.bib
-csl: apa.csl
 editor: visual
 ---
 
