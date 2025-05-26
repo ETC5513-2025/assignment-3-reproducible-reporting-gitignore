@@ -6,9 +6,15 @@ author:
   - Bhuvana Chandrasekar
 format:
   revealjs:
+<<<<<<< HEAD
     theme: solarized        
     slide-number: true   
     toc: false
+=======
+    theme: solarized        # or try: default, serif, solarized, night
+    slide-number: true   # shows current slide number
+    toc: false           # no table of contents slide
+>>>>>>> 8edc42eb610fd9af04343f3e0fbde2b543584e22
 editor: visual
 ---
 

@@ -28,6 +28,7 @@ csl: apa.csl
 editor: visual
 ---
 
+
 ## Executive Summary
 
 This report analyzes two years of data from Washington D.C.'s Capital Bikeshare system, revealing how environmental and temporal factors influence bike usage patterns. The findings highlight the strong link between favorable weather, holidays, and bike rental trends, with implications for urban transport systems.
@@ -65,6 +66,7 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 :::
 
 ::: {style="text-align: justify;"}
+
 ## Methodology:
 
 This report uses the Bike Sharing Dataset from Washington D.C., which contains hourly and daily records for 2011–2012 [@fanaee2014event].It contains two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
