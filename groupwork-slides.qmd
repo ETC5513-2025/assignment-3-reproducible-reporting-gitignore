@@ -132,4 +132,4 @@ hour_data <- read.csv("data/hour.csv")
 
 ## Thank You
 
-Questions? We're happy to discuss our findings.
+Questions? We're happy to discuss our findings. Cheers!
