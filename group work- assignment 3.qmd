@@ -210,25 +210,10 @@ We recommend:
 
 -   Increasing bike availability and docking stations near recreational or high-footfall areas in summer
 -   Ensuring year-round service quality and infrastructure for commuter-heavy routes
--   Using time-based demand trends to optimize staff scheduling, rebalancing logistics, and promotional campaigns
+-   Using time-based demand trends to optimize staff scheduling, re-balancing logistics, and promotional campaigns
 
 Importantly, our analysis is reproducible and adaptable. The approach we used — integrating open data with R, Quarto, and Git — can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
 :::
-
-## References
-
-```         
-Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn M,
-  Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D, Wilke
-  C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” _Journal of Open Source Software_, *4*(43), 1686.
-  doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
-```
-
-```         
-H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
-```
-
-Fanaee-T, H. (2013). Bike Sharing \[Dataset\]. UCI Machine Learning Repository. <https://doi.org/10.24432/C5W894.>
 
 ## AI Acknowledgment
 
