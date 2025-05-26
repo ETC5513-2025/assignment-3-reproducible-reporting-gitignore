@@ -215,6 +215,12 @@ We recommend:
 Importantly, our analysis is reproducible and adaptable. The approach we used — integrating open data with R, Quarto, and Git — can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
 :::
 
+<<<<<<< Updated upstream
 ## AI Acknowledgment
 
 There are AI support for grammar checking.
+=======
+-   Using hourly and seasonal trends to optimize staffing, rebalancing logistics, and promotional campaigns
+
+This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
+>>>>>>> Stashed changes
