@@ -17,15 +17,22 @@ hour_data <- read.csv("data/hour.csv")
 
 ## Team
 
-- Izzul Fattah Aji Pratama\
-- Thuy Nhu Nguyen\
-- Bhuvana Chandrasekar
+-   Izzul Fattah Aji Pratama\
+-   Thuy Nhu Nguyen\
+-   Bhuvana Chandrasekar
 
 ## Introduction
 
--   Urban transport is shifting toward sustainable alternatives\
--   Bike sharing promotes health, efficiency, and lower emissions\
+-   Urban transport is shifting toward sustainable alternatives
+-   Bike sharing promotes health, efficiency, and lower emissions
 -   Our goal: analyze rental trends and make recommendations
+
+## Research Questions
+
+- How do weather conditions impact rentals?  
+- How do weekday and weekend patterns differ?  
+- What are the seasonal usage differences between user types?  
+- What hours see the highest demand?
 
 ## Dataset Overview
 

@@ -9,9 +9,6 @@
 <link href="groupwork-slides_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.42">
 
-  <meta name="author" content="Izzul Fattah Aji Pratama">
-  <meta name="author" content="Thuy Nhu Nguyen">
-  <meta name="author" content="Bhuvana Chandrasekar">
   <title>From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -132,51 +129,43 @@
   <h1 class="title">From Data to Action: Leveraging Bike-Sharing Patterns to Enhance Sustainable Mobility</h1>
 
 <div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Izzul Fattah Aji Pratama 
-</div>
-</div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Thuy Nhu Nguyen 
-</div>
-</div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Bhuvana Chandrasekar 
-</div>
-</div>
 </div>
 
 </section>
-<section id="title-slide" class="slide level2">
-<h2>Title Slide</h2>
-<p><strong>From Data to Action: Leveraging Bike-Sharing Patterns</strong><br>
-<em>ETC5513 – Week 12 Presentation</em><br>
-<strong>Team:</strong><br>
-- Izzul Fattah Aji Pratama<br>
-- Thuy Nhu Nguyen<br>
-- Bhuvana Chandrasekar</p>
+<section id="team" class="slide level2">
+<h2>Team</h2>
+<ul>
+<li>Izzul Fattah Aji Pratama<br>
+</li>
+<li>Thuy Nhu Nguyen<br>
+</li>
+<li>Bhuvana Chandrasekar</li>
+</ul>
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
 <ul>
-<li>Urban transport is shifting toward sustainable alternatives<br>
-</li>
-<li>Bike sharing promotes health, efficiency, and lower emissions<br>
-</li>
+<li>Urban transport is shifting toward sustainable alternatives</li>
+<li>Bike sharing promotes health, efficiency, and lower emissions</li>
 <li>Our goal: analyze rental trends and make recommendations</li>
+</ul>
+</section>
+<section id="research-questions" class="slide level2">
+<h2>Research Questions</h2>
+<ul>
+<li>How do weather conditions impact rentals?<br>
+</li>
+<li>How do weekday and weekend patterns differ?<br>
+</li>
+<li>What are the seasonal usage differences between user types?<br>
+</li>
+<li>What hours see the highest demand?</li>
 </ul>
 </section>
 <section id="dataset-overview" class="slide level2">
 <h2>Dataset Overview</h2>
 <ul>
-<<<<<<< HEAD
 <li><strong>Source</strong>: <a href="https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset">UCI Machine Learning Repository</a><br>
-=======
-<li><strong>Source</strong>: UCI Machine Learning Repository <span class="citation" data-cites="fanaee2014event">[@fanaee2014event]</span><br>
->>>>>>> 8edc42eb610fd9af04343f3e0fbde2b543584e22
 </li>
 <li><strong>Timeframe</strong>: 2011–2012<br>
 </li>
@@ -519,42 +508,80 @@ Bhuvana Chandrasekar
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
