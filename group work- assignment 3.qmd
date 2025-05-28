@@ -236,19 +236,28 @@ day_data %>%
 ::: {style="text-align: justify;"}
 ## Discussion, Conclusion and Recommendations:
 
-This report set out to explore how environmental and temporal factors influence bike rental demand in Washington D.C., using the UCI Bike Sharing Dataset. We investigated rental patterns by season, weather conditions, temperature, hour of day, and user type (casual vs. registered), with the goal of uncovering meaningful trends to inform data-driven decision-making.
+This report explored how environmental and temporal factors affect bike rental demand in Washington D.C., addressing four key questions:
 
-Our findings revealed strong seasonal and hourly patterns. Rental demand peaked in summer and fall, with a surge in casual user activity during warmer months, suggesting weather-sensitive, potentially tourist-driven behavior. In contrast, registered users displayed consistent usage throughout the year and weekdays, indicative of habitual commuting. Rental volumes also followed predictable daily cycles, with distinct peaks during morning and evening commute hours and more gradual midday rises on weekends.
+**Weather impact:** Rentals rise with temperature and drop slightly with high humidity or wind, showing weather-sensitive behavior, especially among casual users.
 
-These trends show that registered users form a reliable commuter base, while casual users introduce seasonal and environmental variability. This distinction is critical for bike-sharing companies, city planners, and transportation authorities when developing policies, allocating fleet resources, and adjusting marketing strategies.
+**Weekday vs weekend:** Weekdays show sharp rental peaks during commute hours, while weekends have more gradual midday peaks.
 
-We recommend:
+**Seasonal user trends:**  Casual users spike in summer and fall, suggesting recreational use; registered users stay consistent, indicating habitual commuting.
 
--   Increasing bike availability and docking stations near recreational or high-footfall areas in summer
--   Ensuring year-round service quality and infrastructure for commuter-heavy routes
--   Using time-based demand trends to optimize staff scheduling, re-balancing logistics, and promotional campaigns
+**Peak hours:** Highest demand occurs at 8 AM and 5–6 PM on weekdays, aligning with work travel.
 
-Importantly, our analysis is reproducible and adaptable. The approach we used, integrating open data with R, Quarto, and Git, can be applied to other cities, climates, or shared mobility services. Whether for city governments, local councils, or private operators managing bikes or e-scooters, these insights can help refine network planning, predict usage peaks, position vehicles more effectively, and even plan battery charging or maintenance station locations in electric fleets.
+These insights suggest two distinct user groups: consistent commuters and seasonal casual riders. Understanding this helps optimize bike availability, docking stations, and targeted services.
+
+**Recommendations:**
+Increase bikes in tourist and recreational zones during summer
+
+Ensure reliable year-round service for commuters
+
+Use peak hour and seasonal trends to inform operations and promotions
+
+This reproducible workflow, using R, Quarto, and Git, can be applied to similar datasets in other cities, helping planners and operators better manage bike or e-scooter fleets.
+
+
 :::
 
 ## AI Acknowledgment
@@ -258,4 +267,3 @@ There are AI support for grammar checking, using OpenAI. [Link](https://chatgpt.
 ## References
 
 This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
-
