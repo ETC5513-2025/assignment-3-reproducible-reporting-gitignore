@@ -253,6 +253,10 @@ Importantly, our analysis is reproducible and adaptable. The approach we used, i
 
 ## AI Acknowledgment
 
+<<<<<<< Updated upstream
 There are AI support for grammar checking, using OpenAI. [Link](https://chatgpt.com/share/683412ac-5054-8002-8523-a5a1b400ef0a)
 
 ## References
+=======
+This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
+>>>>>>> Stashed changes
