@@ -76,25 +76,33 @@ Campuses often encourage cycling by design, creating ideal conditions for bike-s
 4.  What hours see the highest demand?
 :::
 
-::: {style="text-align: justify;"}
-## Methodology:
+::::: {style="text-align: justify;"}
+## Methodology
 
-This report uses the Bike Sharing Dataset from Washington D.C., which contains hourly and daily records for 2011–2012 [@fanaee2014event].It contains two files: `day.csv`(daily rental data) and `hour.csv` (hourly rental data) from 2011 to 2012 in Washington D.C.
+This report uses the **Bike Sharing Dataset** from Washington D.C., which contains hourly and daily rental records from **2011–2012** [@fanaee2014event]. It consists of two key files:
 
-The datasets are complete, with no missing values. They contain weather metrics, timestamps, and detailed user counts. We categorized the variables into three analytical areas:
+-   `day.csv`: Daily rental data\
+-   `hour.csv`: Hourly rental data
 
-1\. **Environmental conditions**: Continuous variables include temperature (`temp`), perceived temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`) — all normalized. These were sourced from \`hour.csv\` and used to assess how weather influences demand.
+The dataset is complete with no missing values and includes timestamps, user types, and weather metrics. To structure our analysis, we categorized variables into three main groups:
 
-2\. **Temporal factors**: These include hour of day (`hr`), day of week (`weekday`), holidays, and working days (`workingday`). `hour.csv`was used to examine hourly rental patterns and compare weekdays to weekends. Seasonal trends were analyzed using `season` (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall) and `mnth` from `day.csv`.
+1.  **Environmental Conditions**\
+    Variables include temperature (`temp`), apparent temperature (`atemp`), humidity (`hum`), and windspeed (`windspeed`). All are normalized and drawn from `hour.csv`. These were used to evaluate how environmental comfort influences rental demand.
 
-3\. **User behavior**: Total rentals (`cnt`) are split into `casual`(non-registered) and `registered` (subscribers). `day.csv` was used to study seasonal variation in user types, while `hour.csv` was used for finer temporal granularity.
+2.  **Temporal Factors**\
+    We analyzed hour of day (`hr`), day of the week (`weekday`), holidays, and working days (`workingday`) from `hour.csv`. Seasonality was explored using `season` (1 = Winter, 2 = Spring, 3 = Summer, 4 = Fall) and month (`mnth`) from `day.csv`. This helped distinguish rental trends across time and calendar-based patterns, such as weekday vs. weekend usage.
 
-All analysis was performed in **R**, using `tidyverse` for data wrangling and `ggplot2` for visualization. The report was built in **Quarto** for reproducibility, and **Git** was used for structured collaboration via separate branches.
+3.  **User Behavior**\
+    Rental count (`cnt`) is split into `casual` and `registered` users. `day.csv` was used to assess seasonal variation in user types, while `hour.csv` offered a more granular view of hourly trends.
 
-@fig-season-users shows average total users by season using `day.csv`, capturing clear seasonal demand shifts.
+All data processing and visualization were performed in **R**, primarily using the `tidyverse` and `ggplot2` packages. The report is built using **Quarto**, ensuring reproducibility. Version control and team collaboration were managed through **Git**, with structured branches for each major section.
 
-@tbl-hourly-weektype uses `hour.csv` to show average hourly rentals on weekdays vs. weekends, demonstrating time-of-day behavioral differences. Further analysis appears in the Results section.
-:::
+We used visualizations to support our findings:
+
+-   @fig-season-users illustrates seasonal trends in average total users\
+-   @tbl-hourly-weektype compares average hourly rentals between weekdays and weekends
+
+These plots set the stage for deeper insights presented in the Results section.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE}
 #| label: fig-season-users
@@ -242,22 +250,19 @@ This report explored how environmental and temporal factors affect bike rental d
 
 **Weekday vs weekend:** Weekdays show sharp rental peaks during commute hours, while weekends have more gradual midday peaks.
 
-**Seasonal user trends:**  Casual users spike in summer and fall, suggesting recreational use; registered users stay consistent, indicating habitual commuting.
+**Seasonal user trends:** Casual users spike in summer and fall, suggesting recreational use; registered users stay consistent, indicating habitual commuting.
 
 **Peak hours:** Highest demand occurs at 8 AM and 5–6 PM on weekdays, aligning with work travel.
 
 These insights suggest two distinct user groups: consistent commuters and seasonal casual riders. Understanding this helps optimize bike availability, docking stations, and targeted services.
 
 **Recommendations:**
-Increase bikes in tourist and recreational zones during summer
 
-Ensure reliable year-round service for commuters
+-   Increase bikes in tourist and recreational zones during summer.
+-   Ensure reliable year-round service for commuters.
+-   Use peak hour and seasonal trends to inform operations and promotions.
 
-Use peak hour and seasonal trends to inform operations and promotions
-
-This reproducible workflow, using R, Quarto, and Git, can be applied to similar datasets in other cities, helping planners and operators better manage bike or e-scooter fleets.
-
-
+This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
 :::
 
 ## AI Acknowledgment
@@ -265,5 +270,4 @@ This reproducible workflow, using R, Quarto, and Git, can be applied to similar 
 There are AI support for grammar checking, using OpenAI. [Link](https://chatgpt.com/share/683412ac-5054-8002-8523-a5a1b400ef0a)
 
 ## References
-
-This analysis demonstrates how open data and reproducible tools can generate insights for urban mobility planning, infrastructure investment, and user engagement strategies — and the same framework can be applied to more recent datasets from other cities or systems.
+:::::

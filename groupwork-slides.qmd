@@ -96,7 +96,7 @@ hour_data <- read.csv("data/hour.csv")
 
 -   Casual users increase in summer\
 
--   Registered users dominate during winter\
+-   Registered users are steady all year round\
 
     ```{r}
     day_data %>%
